@@ -1,0 +1,68 @@
+<p-dialog #dialog [(visible)]="visible" [modal]="true" [header]="'Ver Persona'" [maximizable]="true"
+    [style]="{width: '80vw'}" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="content-block">
+            <div class="row-block">
+                <div class="row-item-block-35">
+                    <p-floatLabel>
+                        <input id="firstName" type="text" pInputText [(ngModel)]="person.firstName" readonly
+                            class="readonly-input">
+                        <label for="firstName">Nombres</label>
+                    </p-floatLabel>
+                </div>
+                <div class="row-item-block-35">
+                    <p-floatLabel>
+                        <input id="lastName" type="text" pInputText [(ngModel)]="person.lastName" readonly
+                            class="readonly-input">
+                        <label for="lastName">Apellidos</label>
+                    </p-floatLabel>
+                </div>
+                <div class="row-item-block-30">
+                    <p-floatLabel>
+                        <input id="phone" type="text" pInputText [(ngModel)]="person.phone" readonly
+                            class="readonly-input">
+                        <label for="phone">Telefono</label>
+                    </p-floatLabel>
+                </div>
+            </div>
+
+            <div class="row-block">
+                <div class="row-item-block-35">
+                    <p-floatLabel>
+                        <input id="nationality" [(ngModel)]="nationality" type="text" pInputText readonly
+                            class="readonly-input">
+                        <label for="nationality">Nacionalidad</label>
+                    </p-floatLabel>
+                </div>
+                <div class="row-item-block-35">
+                    <p-floatLabel>
+                        <input id="documentNumber" type="text" pInputText [(ngModel)]="person.documentNumber" readonly
+                            class="readonly-input">
+                        <label for="documentNumber">Numero de documento</label>
+                    </p-floatLabel>
+                </div>
+                <!-- <div class="row-item-block-30">
+                    <div class="flex flex-wrap gap-3">
+                        <div class="flex align-items-center">
+                            <p-radioButton name="gender" value="1" [(ngModel)]="person.gender" inputId="gender" />
+                            <label for="gender" class="ml-2">
+                                Masculino
+                            </label>
+                        </div>
+                        <div class="flex align-items-center">
+                            <p-radioButton name="gender" value="0" [(ngModel)]="person.gender" inputId="gender" />
+                            <label for="gender" class="ml-2">
+                                Femenino
+                            </label>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <p-divider />
+        <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" severity="secondary"
+            (click)="hideDialog()"></button>
+    </ng-template>
+</p-dialog>

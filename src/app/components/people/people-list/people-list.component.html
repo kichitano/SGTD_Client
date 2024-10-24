@@ -1,0 +1,68 @@
+<p-toast />
+<p-confirmDialog />
+
+<div class="button-block">
+    <label class="label-button-block">Lista de Personas</label>
+    <p-button label="Registrar Persona" icon="pi pi-plus" (onClick)="createPerson()"></p-button>
+</div>
+
+<div class="table-block">
+    <p-table #dt1 [value]="people" dataKey="id" [rows]="10" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true"
+        [globalFilterFields]="['firstName', 'lastName', 'documentNumber']">
+        <ng-template pTemplate="caption">
+            <div class="table-button-block">
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" [(ngModel)]="searchValue"
+                        (input)="applyFilterGlobal($event, 'contains')" (keydown.escape)="clearSearchText(dt1)"
+                        placeholder="Buscar persona" />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="min-width:15rem">
+                    <div class="flex align-items-center">
+                        Nombres
+                    </div>
+                </th>
+                <th style="min-width:10rem">
+                    <div class="flex align-items-center">
+                        Apellidos
+                    </div>
+                </th>
+                <th style="min-width:15rem">
+                    <div class="flex align-items-center">
+                        Numero Documento
+                    </div>
+                </th>
+                <th style="min-width:10rem">Acciones</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-people>
+            <tr>
+                <td>{{people.firstName}}</td>
+                <td>{{people.lastName}}</td>
+                <td>{{people.documentNumber}}</td>
+                <td>
+                    <div class="flex justify-content-between">
+                        <p-button icon="pi pi-eye" [rounded]="true" [text]="true" severity="secondary"
+                            (click)="showPerson(people.id)"></p-button>
+                        <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" severity="info"
+                            (click)="updatePerson(people.id)"></p-button>
+                        <p-button pRipple icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger"
+                            (click)="deletePerson(people.id)"></p-button>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="7">No se encontraron empresas.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<app-people-show></app-people-show>
+<app-people-new-edit (dialogClosed)="onDialogClosed($event)"></app-people-new-edit>

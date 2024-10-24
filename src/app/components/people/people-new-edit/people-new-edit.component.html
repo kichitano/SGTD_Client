@@ -1,0 +1,61 @@
+<p-dialog #dialog [(visible)]="visible" [modal]="true" [header]="isEditMode ? 'Editar Persona' : 'Nueva Persona'"
+    [maximizable]="true" [style]="{width: '80vw'}" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="content-block">
+            <div class="row-block">
+                <div class="row-item-block-35">
+                    <p-floatLabel>
+                        <input id="firstName" type="text" pInputText [(ngModel)]="person.firstName" required>
+                        <label for="firstName">Nombres</label>
+                    </p-floatLabel>
+                </div>
+                <div class="row-item-block-35">
+                    <p-floatLabel>
+                        <input id="lastName" type="text" pInputText [(ngModel)]="person.lastName">
+                        <label for="lastName">Apellidos</label>
+                    </p-floatLabel>
+                </div>
+                <div class="row-item-block-30">
+                    <p-floatLabel>
+                        <input id="phone" type="text" pInputText [(ngModel)]="person.phone" required>
+                        <label for="phone">Telefono</label>
+                    </p-floatLabel>
+                </div>
+            </div>
+
+            <div class="row-block">
+                <div class="row-item-block-35">
+                    <p-floatLabel>
+                        <p-autoComplete id="nationalityCode" [(ngModel)]="selectedCountry" [dropdown]="true"
+                            [suggestions]="filteredCountries"
+                            (completeMethod)="filterCountry($event.query.toLowerCase())" optionLabel="name"
+                            appendTo="body" />
+                        <label for="nationalityCode">País</label>
+                    </p-floatLabel>
+                </div>
+                <div class="row-item-block-35">
+                    <p-floatLabel>
+                        <input id="documentNumber" type="text" pInputText [(ngModel)]="person.documentNumber">
+                        <label for="documentNumber">Numero de documento</label>
+                    </p-floatLabel>
+                </div>
+                <div class="row-item-block-30">
+                    <p-floatLabel>
+                        <p-autoComplete id="gender" [(ngModel)]="selectedGender" [dropdown]="true"
+                            [suggestions]="filteredGenders" (completeMethod)="filterGender($event.query.toLowerCase())"
+                            optionLabel="name" [forceSelection]="true" appendTo="body">
+                        </p-autoComplete>
+                        <label for="gender">Género</label>
+                    </p-floatLabel>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <p-divider />
+        <button pButton pRipple label="Guardar" icon="pi pi-check" class="p-button-text"
+            (click)="createPerson()"></button>
+        <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" severity="secondary"
+            (click)="hideDialog()"></button>
+    </ng-template>
+</p-dialog>

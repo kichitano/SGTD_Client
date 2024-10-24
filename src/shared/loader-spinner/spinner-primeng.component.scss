@@ -1,0 +1,39 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+:host ::ng-deep .p-spinner .p-progress-spinner-circle {
+  stroke: #ffffff !important;
+  fill: rgba(0, 0, 0, 0);
+  animation: p-progress-spinner-dash 2s ease-in-out infinite, custom-progress-spinner-color 6s ease-in-out infinite;
+}
+
+@keyframes custom-progress-spinner-color {
+
+  0%,
+  100% {
+    stroke: #FFFFFF;
+  }
+
+  40% {
+    stroke: #FFFFFF;
+  }
+
+  66% {
+    stroke: #FFFFFF;
+  }
+
+  80%,
+  90% {
+    stroke: #FFFFFF;
+  }
+}
