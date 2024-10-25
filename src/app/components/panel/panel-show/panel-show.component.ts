@@ -70,7 +70,7 @@ export class PanelShowComponent implements OnInit {
       case MenuOptionsEnum.Personas:
         return 'pi pi-fw pi-users';
       case MenuOptionsEnum.Areas:
-        return 'pi pi-fw pi-sitemap';
+        return 'pi pi-fw pi-building';
       case MenuOptionsEnum.Cargos:
         return 'pi pi-fw pi-briefcase';
       case MenuOptionsEnum.Usuarios:

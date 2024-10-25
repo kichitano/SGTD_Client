@@ -9,7 +9,5 @@ export interface AreaModel {
 export interface AreaDependencyModel {
     id: number;
     parentAreaId: number;
-    parentArea?: AreaModel;
     childAreaId: number;
-    childArea?: AreaModel;
 }

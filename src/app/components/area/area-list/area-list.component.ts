@@ -13,7 +13,8 @@ import { Subject, takeUntil } from 'rxjs';
 import { AreaModel } from '../area.model';
 import { AreaService } from '../area.service';
 import { AreaNewEditComponent } from '../area-new-edit/area-new-edit.component';
-// import { AreaShowComponent } from '../area-show/area-show.component';
+import { AreaShowComponent } from '../area-show/area-show.component';
+import { AreaShowOrganizationChartComponent } from '../area-show-organization-chart/area-show-organization-chart.component';
 
 @Component({
   selector: 'app-area-list',
@@ -28,7 +29,8 @@ import { AreaNewEditComponent } from '../area-new-edit/area-new-edit.component';
     ConfirmDialogModule,
     ToastModule,
     AreaNewEditComponent,
-    // AreaShowComponent
+    AreaShowComponent,
+    AreaShowOrganizationChartComponent
   ],
   providers: [ConfirmationService, MessageService],
   templateUrl: './area-list.component.html',
@@ -36,7 +38,8 @@ import { AreaNewEditComponent } from '../area-new-edit/area-new-edit.component';
 })
 export class AreaListComponent {
   @ViewChild(AreaNewEditComponent) areaNewEditComponent!: AreaNewEditComponent;
-  // @ViewChild(AreaShowComponent) areaShowComponent!: AreaShowComponent;
+  @ViewChild(AreaShowComponent) areaShowComponent!: AreaShowComponent;
+  @ViewChild(AreaShowOrganizationChartComponent) areaShowOrganizationChartComponent!: AreaShowOrganizationChartComponent;
   @ViewChild('dt1') dt1: Table | undefined;
 
   unsubscribe$ = new Subject<void>();
@@ -69,7 +72,11 @@ export class AreaListComponent {
   }
 
   showArea(areaId: number) {
-    // this.areaShowComponent.showDialog(areaId);
+    this.areaShowComponent.showDialog(areaId);
+  }
+
+  showOrganizationChart() {
+    this.areaShowOrganizationChartComponent.showDialog();
   }
 
   updateArea(areaId: number) {

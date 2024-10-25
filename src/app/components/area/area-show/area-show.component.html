@@ -1,0 +1,44 @@
+<p-dialog #dialog [(visible)]="visible" [modal]="true" [header]="'Ver Área'" [maximizable]="true"
+    [style]="{width: '80vw'}" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="content-block">
+            <div class="row-block">
+                <div class="row-item-block-35">
+                    <p-floatLabel>
+                        <input id="name" type="text" pInputText [(ngModel)]="area.name" readonly class="readonly-input">
+                        <label for="name">Nombre</label>
+                    </p-floatLabel>
+                </div>
+                <div class="row-item-block-35">
+                    <p-floatLabel>
+                        <input id="description" type="text" pInputText [(ngModel)]="area.description" readonly
+                            class="readonly-input">
+                        <label for="description">Descripción</label>
+                    </p-floatLabel>
+                </div>
+                <div class="row-item-block-30">
+                    <p-floatLabel>
+                        <input id="status" type="text" pInputText [ngModel]="area.status ? 'Activo' : 'Inactivo'"
+                            readonly class="readonly-input">
+                        <label for="status">Estado</label>
+                    </p-floatLabel>
+                </div>
+            </div>
+
+            <div class="row-block">
+                <div class="row-item-block-35">
+                    <p-floatLabel>
+                        <input id="parentArea" type="text" pInputText [(ngModel)]="parentAreaName" readonly
+                            class="readonly-input">
+                        <label for="parentArea">Área Padre</label>
+                    </p-floatLabel>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <p-divider />
+        <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" severity="secondary"
+            (click)="hideDialog()"></button>
+    </ng-template>
+</p-dialog>

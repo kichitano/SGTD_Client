@@ -34,7 +34,8 @@ export class AreaService {
                 id: area.id,
                 name: area.name,
                 description: area.description,
-                status: area.status
+                status: area.status,
+                parentAreaId: area.parentAreaId
             },
             { observe: 'response' }
         );

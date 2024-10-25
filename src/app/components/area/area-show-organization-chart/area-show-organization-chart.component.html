@@ -1,0 +1,21 @@
+<p-dialog #dialog [(visible)]="visible" [modal]="true" [header]="'Ver Organigrama'" [maximizable]="true"
+    [style]="{width: '80vw'}" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="content-block">
+            <p-organizationChart [value]="data" [collapsible]="true" styleClass="organization-chart">
+                <ng-template let-node pTemplate="area">
+                    <div class="node-content">
+                        <div class="node-header">{{node.data.name}}</div>
+                        <div class="node-description">{{node.data.description}}</div>
+                        <!-- <div class="node-status">{{node.data.status ? 'Activo' : 'Inactivo'}}</div> -->
+                    </div>
+                </ng-template>
+            </p-organizationChart>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <p-divider />
+        <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" severity="secondary"
+            (click)="hideDialog()"></button>
+    </ng-template>
+</p-dialog>

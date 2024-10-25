@@ -15,8 +15,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 
 import { SpinnerPrimeNgService } from '../../../../shared/loader-spinner/spinner-primeng.service';
 import { AreaService } from '../area.service';
-import { AreaDependencyModel, AreaModel } from '../area.model';
-import { AreaDependencyService } from '../../services/area-dependency.service';
+import { AreaModel } from '../area.model';
 
 @Component({
   selector: 'app-area-new-edit',
@@ -54,15 +53,11 @@ export class AreaNewEditComponent {
 
   constructor(
     private readonly spinnerPrimeNgService: SpinnerPrimeNgService,
-    private readonly messageService: MessageService,
     private readonly areaService: AreaService,
-    private readonly areaDependencyService: AreaDependencyService
   ) { }
 
   createArea() {
-    console.log(this.selectedParentArea);
     this.area.parentAreaId = this.selectedParentArea?.id;
-
     this.spinnerPrimeNgService
       .use(this.areaService.CreateAsync(this.area))
       .pipe(takeUntil(this.unsubscribe$))
@@ -74,13 +69,20 @@ export class AreaNewEditComponent {
       });
   }
 
-  loadAreas() {
+  loadAreas(areaId?: number) {
     this.spinnerPrimeNgService
       .use(this.areaService.GetAllAsync())
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (res) => {
           this.parentAreas = res;
+          if (areaId) {
+            this.loadArea(areaId);
+          } else {
+            this.area = {} as AreaModel;
+            this.area.status = true;
+            this.isEditMode = false;
+          }
         }
       });
   }
@@ -92,19 +94,8 @@ export class AreaNewEditComponent {
       .subscribe({
         next: (res) => {
           this.area = res;
-          this.loadAreaRelationship();
-        }
-      });
-  }
-
-  loadAreaRelationship() {
-    this.spinnerPrimeNgService
-      .use(this.areaDependencyService.GetByIdAsync(this.area.id))
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe({
-        next: (res) => {
-          if (res.parentAreaId > 0)
-            this.loadAreaDependency(res.parentAreaId);
+          if (this.area.parentAreaId && this.area.parentAreaId > 0)
+            this.loadAreaDependency(this.area.parentAreaId);
         }
       });
   }
@@ -116,41 +107,34 @@ export class AreaNewEditComponent {
       .subscribe({
         next: (res) => {
           this.areaDependency = res;
+          this.selectedParentArea = this.areaDependency;
         }
       });
   }
 
   updateArea() {
-    // this.spinnerPrimeNgService
-    //   .use(this.areaService.UpdateAsync(this.area, this.selectedParentArea?.id))
-    //   .pipe(takeUntil(this.unsubscribe$))
-    //   .subscribe({
-    //     next: () => {
-    //       this.result = true;
-    //       this.hideDialog();
-    //     }
-    //   });
+    this.area.parentAreaId = this.selectedParentArea?.id;
+    this.spinnerPrimeNgService
+      .use(this.areaService.UpdateAsync(this.area))
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe({
+        next: () => {
+          this.result = true;
+          this.hideDialog();
+        }
+      });
   }
 
   showDialog(areaId?: number) {
-    this.loadAreas();
-    if (areaId) {
-      this.loadArea(areaId);
+    this.cleanVariables();
+    if (areaId)
       this.isEditMode = true;
-      this.selectedParentArea = this.areaDependency;
-    } else {
-      this.area = {} as AreaModel;
-      this.area.status = true;
-      this.isEditMode = false;
-    }
+    this.loadAreas(areaId);
     this.visible = true;
   }
 
   hideDialog() {
     this.visible = false;
-    this.area = {} as AreaModel;
-    this.selectedParentArea = undefined;
-    this.isEditMode = false;
     this.dialogClosed.emit(this.result);
   }
 
@@ -165,5 +149,13 @@ export class AreaNewEditComponent {
     }
 
     this.filteredParentAreas = filtered;
+  }
+
+  private cleanVariables() {
+    this.area = {} as AreaModel;
+    this.areaDependency = {} as AreaModel;
+    this.selectedParentArea = undefined;
+    this.isEditMode = false;
+    this.result = false;
   }
 }

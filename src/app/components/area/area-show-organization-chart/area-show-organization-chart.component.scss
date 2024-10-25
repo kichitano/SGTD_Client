@@ -1,0 +1,52 @@
+.content-block {
+    font-family: 'Roboto', sans-serif;
+    margin-top: 1.5rem;
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+
+    ::ng-deep {
+        .organization-chart {
+            .p-organizationchart {
+                .p-organizationchart-node-content {
+                    padding: 0;
+                    border: none;
+                }
+            }
+
+            .node-content {
+                background-color: #4a4a4a;
+                color: white;
+                padding: 1rem;
+                border-radius: 4px;
+                min-width: 200px;
+                text-align: center;
+
+                .node-header {
+                    font-weight: bold;
+                    font-size: 1.1em;
+                    margin-bottom: 0.5rem;
+                }
+
+                .node-description {
+                    font-size: 0.9em;
+                    margin-bottom: 0.5rem;
+                    opacity: 0.9;
+                }
+
+                .node-status {
+                    font-size: 0.8em;
+                    opacity: 0.8;
+                }
+            }
+
+            .p-organizationchart-line-down {
+                background: #4a4a4a;
+            }
+
+            .p-organizationchart-line-left,
+            .p-organizationchart-line-right {
+                border-color: #4a4a4a;
+            }
+        }
+    }
+}
