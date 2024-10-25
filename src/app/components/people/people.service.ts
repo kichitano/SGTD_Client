@@ -32,6 +32,22 @@ export class PeopleService {
         );
     }
 
+    UpdateAsync(person: PersonModel): Observable<HttpResponse<void>> {
+        return this.http.put<void>(
+            `${this.apiUrl}/`,
+            {
+                id: person.id,
+                firstName: person.firstName,
+                lastName: person.lastName,
+                phone: person.phone,
+                nationalityCode: person.nationalityCode,
+                documentNumber: person.documentNumber,
+                gender: person.gender
+            },
+            { observe: 'response' }
+        );
+    }
+
     GetByIdAsync(personId: number): Observable<PersonModel> {
         return this.http.get<PersonModel>(`${this.apiUrl}/${personId}`);
     }

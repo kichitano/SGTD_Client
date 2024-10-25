@@ -1,0 +1,52 @@
+<p-dialog #dialog [(visible)]="visible" [modal]="true" [header]="isEditMode ? 'Editar Área' : 'Nueva Área'"
+    [maximizable]="true" [style]="{width: '80vw'}" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="content-block">
+            <div class="row-block">
+                <div class="row-item-block-60">
+                    <p-floatLabel>
+                        <input id="name" type="text" pInputText [(ngModel)]="area.name" required>
+                        <label for="name">Nombre</label>
+                    </p-floatLabel>
+                </div>
+                <div class="row-item-block-30">
+                    <p-floatLabel>
+                        <p-autoComplete id="parentArea" [(ngModel)]="selectedParentArea" [dropdown]="true"
+                            [suggestions]="filteredParentAreas" (completeMethod)="filterParentArea($event)"
+                            optionLabel="name" appendTo="body" />
+                        <label for="parentArea">Área Padre</label>
+                    </p-floatLabel>
+                </div>
+                <div class="row-item-block-10">
+                    <div class="row-item-block-10">
+                        <div class="custom-float-label">
+                            <label for="estado">Estado</label>
+                            <div class="input-switch-container">
+                                <p-inputSwitch id="estado" [(ngModel)]="area.status"></p-inputSwitch>
+                                <span>{{area.status ? 'Activo' : 'Inactivo'}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row-block">
+                <div class="row-item-block-100">
+                    <p-floatLabel>
+                        <input id="description" type="text" pInputText [(ngModel)]="area.description">
+                        <label for="description">Descripción</label>
+                    </p-floatLabel>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <p-divider />
+        <button *ngIf="!isEditMode" pButton pRipple label="Guardar" icon="pi pi-check" class="p-button-text"
+            (click)="createArea()"></button>
+        <button *ngIf="isEditMode" pButton pRipple label="Actualizar" icon="pi pi-check" class="p-button-text"
+            (click)="updateArea()"></button>
+        <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" severity="secondary"
+            (click)="hideDialog()"></button>
+    </ng-template>
+</p-dialog>

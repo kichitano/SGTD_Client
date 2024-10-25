@@ -34,9 +34,9 @@ export class PanelShowComponent implements OnInit {
   menuItems: MenuItem[] = [];
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private componentLoader: ComponentLoaderService
+    private readonly route: ActivatedRoute,
+    private readonly router: Router,
+    private readonly componentLoader: ComponentLoaderService
   ) { }
 
   ngOnInit() {
