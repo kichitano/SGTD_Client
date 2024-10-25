@@ -4,7 +4,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -48,7 +48,6 @@ import { GenderModel, PersonModel } from '../people.model';
 })
 
 export class PeopleNewEditComponent {
-
   @Output() dialogClosed = new EventEmitter<boolean>();
   unsubscribe$ = new Subject<void>();
 
@@ -66,10 +65,11 @@ export class PeopleNewEditComponent {
   result = false;
 
   constructor(
-    private spinnerPrimeNgService: SpinnerPrimeNgService,
-    private peopleService: PeopleService,
-    private countryService: CountryService
-  ) {  }
+    private readonly spinnerPrimeNgService: SpinnerPrimeNgService,
+    private readonly messageService: MessageService,
+    private readonly peopleService: PeopleService,
+    private readonly countryService: CountryService
+  ) { }
 
   loadCountries() {
     this.spinnerPrimeNgService
@@ -78,10 +78,10 @@ export class PeopleNewEditComponent {
       .subscribe({
         next: (res) => {
           this.countries = res;
-        },
-        error: (err: HttpErrorResponse) => {
-          // TODO: Mostrar toaster de PrimeNG para mensajes de error
-          // this.toastr.error(this.humanError.translate(err));
+          if (this.isEditMode) {
+            this.selectedCountry = res.filter(q => q.code.match(this.person.nationalityCode))[0];
+            this.selectedGender = this.genders.filter(q => q.value == this.person.gender)[0];
+          }
         }
       });
   }
@@ -97,10 +97,30 @@ export class PeopleNewEditComponent {
         next: () => {
           this.result = true;
           this.hideDialog();
-        },
-        error: (err: HttpErrorResponse) => {
-          // TODO: Mostrar toaster de PrimeNG para mensajes de error
-          // this.toastr.error(this.humanError.translate(err));
+        }
+      });
+  }
+
+  loadPerson(personId: number) {
+    this.spinnerPrimeNgService
+      .use(this.peopleService.GetByIdAsync(personId))
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe({
+        next: (res) => {
+          this.person = res;
+          this.loadCountries();
+        }
+      });
+  }
+
+  updatePerson() {
+    this.spinnerPrimeNgService
+      .use(this.peopleService.UpdateAsync(this.person))
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe({
+        next: () => {
+          this.result = true;
+          this.hideDialog();
         }
       });
   }
@@ -108,10 +128,10 @@ export class PeopleNewEditComponent {
   showDialog(personId?: number) {
     this.loadCountries();
     if (personId) {
-      // this.loadPerson(personId);
+      this.loadPerson(personId);
       this.isEditMode = true;
     } else {
-      // this.cleanPerson();
+      this.person = {} as PersonModel;
       this.isEditMode = false;
     }
     this.visible = true;
@@ -119,7 +139,7 @@ export class PeopleNewEditComponent {
 
   hideDialog() {
     this.visible = false;
-    // this.cleanPerson();
+    this.person = {} as PersonModel;
     this.isEditMode = false;
     this.dialogClosed.emit(this.result);
   }

@@ -10,7 +10,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { InputTextModule } from 'primeng/inputtext';
-import { PersonModel } from '../people.model';
+import { GenderModel, PersonModel } from '../people.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subject, takeUntil } from 'rxjs';
 import { SpinnerPrimeNgService } from '../../../../shared/loader-spinner/spinner-primeng.service';
@@ -44,15 +44,19 @@ export class PeopleShowComponent {
   @Output() dialogClosed = new EventEmitter<boolean>();
   unsubscribe$ = new Subject<void>();
 
+  genders: GenderModel[] = [
+    { name: 'Masculino', value: true },
+    { name: 'Femenino', value: false }];
   person: PersonModel = {} as PersonModel;
 
   nationality: string = '';
+  gender: string = '';
   visible = false;
 
   constructor(
-    private spinnerPrimeNgService: SpinnerPrimeNgService,
-    private peopleService: PeopleService,
-    private countryService: CountryService
+    private readonly spinnerPrimeNgService: SpinnerPrimeNgService,
+    private readonly peopleService: PeopleService,
+    private readonly countryService: CountryService
   ) { }
 
   loadPerson(personId: number) {
@@ -78,6 +82,7 @@ export class PeopleShowComponent {
       .subscribe({
         next: (res) => {
           this.nationality = res.filter(q => q.code.match(this.person.nationalityCode))[0].name;
+          this.gender = this.genders.filter(q => q.value == this.person.gender)[0].name;
         },
         error: (err: HttpErrorResponse) => {
           // TODO: Mostrar toaster de PrimeNG para mensajes de error

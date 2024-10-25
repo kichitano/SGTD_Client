@@ -53,8 +53,10 @@
     </ng-template>
     <ng-template pTemplate="footer">
         <p-divider />
-        <button pButton pRipple label="Guardar" icon="pi pi-check" class="p-button-text"
+        <button *ngIf="!isEditMode" pButton pRipple label="Guardar" icon="pi pi-check" class="p-button-text"
             (click)="createPerson()"></button>
+        <button *ngIf="isEditMode" pButton pRipple label="Actualizar" icon="pi pi-check" class="p-button-text"
+            (click)="updatePerson()"></button>
         <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" severity="secondary"
             (click)="hideDialog()"></button>
     </ng-template>

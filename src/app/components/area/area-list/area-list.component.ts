@@ -1,7 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -9,17 +8,16 @@ import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
 import { Table, TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
-
 import { SpinnerPrimeNgService } from '../../../../shared/loader-spinner/spinner-primeng.service';
-
-import { PeopleShowComponent } from '../people-show/people-show.component';
-import { PeopleNewEditComponent } from '../people-new-edit/people-new-edit.component';
-import { PeopleService } from '../people.service';
 import { Subject, takeUntil } from 'rxjs';
-import { PersonModel } from '../people.model';
+import { AreaModel } from '../area.model';
+import { AreaService } from '../area.service';
+import { AreaNewEditComponent } from '../area-new-edit/area-new-edit.component';
+import { AreaShowComponent } from '../area-show/area-show.component';
+import { AreaShowOrganizationChartComponent } from '../area-show-organization-chart/area-show-organization-chart.component';
 
 @Component({
-  selector: 'app-people-list',
+  selector: 'app-area-list',
   standalone: true,
   imports: [
     CommonModule,
@@ -30,59 +28,62 @@ import { PersonModel } from '../people.model';
     InputTextModule,
     ConfirmDialogModule,
     ToastModule,
-    PeopleNewEditComponent,
-    PeopleShowComponent
+    AreaNewEditComponent,
+    AreaShowComponent,
+    AreaShowOrganizationChartComponent
   ],
   providers: [ConfirmationService, MessageService],
-  templateUrl: './people-list.component.html',
-  styleUrl: './people-list.component.scss'
+  templateUrl: './area-list.component.html',
+  styleUrl: './area-list.component.scss'
 })
-export class PeopleListComponent {
-
-  @ViewChild(PeopleNewEditComponent) peopleNewEditComponent!: PeopleNewEditComponent;
-  @ViewChild(PeopleShowComponent) peopleShowComponent!: PeopleShowComponent;
+export class AreaListComponent {
+  @ViewChild(AreaNewEditComponent) areaNewEditComponent!: AreaNewEditComponent;
+  @ViewChild(AreaShowComponent) areaShowComponent!: AreaShowComponent;
+  @ViewChild(AreaShowOrganizationChartComponent) areaShowOrganizationChartComponent!: AreaShowOrganizationChartComponent;
   @ViewChild('dt1') dt1: Table | undefined;
 
   unsubscribe$ = new Subject<void>();
-
-  people: Partial<PersonModel>[] = [];
-
+  areas: Partial<AreaModel>[] = [];
   searchValue = '';
-  selectedPersonId = 0;
+  selectedAreaId = 0;
 
   constructor(
     private readonly spinnerPrimeNgService: SpinnerPrimeNgService,
     private readonly confirmationService: ConfirmationService,
-    private readonly peopleService: PeopleService,
+    private readonly areaService: AreaService,
     private readonly messageService: MessageService
   ) {
-    this.loadPeople();
+    this.loadAreas();
   }
 
-  loadPeople() {
+  loadAreas() {
     this.spinnerPrimeNgService
-      .use(this.peopleService.GetAllAsync())
+      .use(this.areaService.GetAllAsync())
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (res) => {
-          this.people = res;
+          this.areas = res;
         }
       });
   }
 
-  createPerson() {
-    this.peopleNewEditComponent.showDialog();
+  createArea() {
+    this.areaNewEditComponent.showDialog();
   }
 
-  showPerson(personId: number) {
-    this.peopleShowComponent.showDialog(personId);
+  showArea(areaId: number) {
+    this.areaShowComponent.showDialog(areaId);
   }
 
-  updatePerson(personId: number) {
-    this.peopleNewEditComponent.showDialog(personId);
+  showOrganizationChart() {
+    this.areaShowOrganizationChartComponent.showDialog();
   }
 
-  deletePerson(personId: number) {
+  updateArea(areaId: number) {
+    this.areaNewEditComponent.showDialog(areaId);
+  }
+
+  deleteArea(areaId: number) {
     this.confirmationService.confirm({
       message: `¿Está seguro que desea eliminar el registro seleccionado?`,
       header: 'Advertencia',
@@ -93,7 +94,7 @@ export class PeopleListComponent {
       rejectButtonStyleClass: 'p-button-text',
 
       accept: () => {
-        this.people = this.people.filter(q => q.id !== personId);
+        this.areas = this.areas.filter(q => q.id !== areaId);
         this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Registro eliminado correctamente', life: 3000 });
       }
     });
@@ -113,6 +114,6 @@ export class PeopleListComponent {
     if (result) {
       this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Registro guardado correctamente', life: 3000 });
     }
-    this.loadPeople();
+    this.loadAreas();
   }
 }

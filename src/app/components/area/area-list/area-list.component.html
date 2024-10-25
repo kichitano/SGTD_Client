@@ -2,20 +2,21 @@
 <p-confirmDialog />
 
 <div class="button-block">
-    <label class="label-button-block">Lista de Personas</label>
-    <p-button label="Registrar Persona" icon="pi pi-plus" (onClick)="createPerson()"></p-button>
+    <label class="label-button-block">Lista de Áreas</label>
+    <p-button label="Mostrar Organigrama" icon="pi pi-sitemap" (onClick)="showOrganizationChart()"></p-button>
+    <p-button label="Registrar Área" icon="pi pi-plus" (onClick)="createArea()"></p-button>
 </div>
 
 <div class="table-block">
-    <p-table #dt1 [value]="people" dataKey="id" [rows]="10" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true"
-        [globalFilterFields]="['firstName', 'lastName', 'documentNumber']">
+    <p-table #dt1 [value]="areas" dataKey="id" [rows]="10" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true"
+        [globalFilterFields]="['name', 'description', 'status']">
         <ng-template pTemplate="caption">
             <div class="table-button-block">
                 <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" [(ngModel)]="searchValue"
                         (input)="applyFilterGlobal($event, 'contains')" (keydown.escape)="clearSearchText(dt1)"
-                        placeholder="Buscar persona" />
+                        placeholder="Buscar área" />
                 </span>
             </div>
         </ng-template>
@@ -23,35 +24,35 @@
             <tr>
                 <th style="min-width:15rem">
                     <div class="flex align-items-center">
-                        Nombres
-                    </div>
-                </th>
-                <th style="min-width:10rem">
-                    <div class="flex align-items-center">
-                        Apellidos
+                        Nombre
                     </div>
                 </th>
                 <th style="min-width:15rem">
                     <div class="flex align-items-center">
-                        Numero Documento
+                        Descripción
+                    </div>
+                </th>
+                <th style="min-width:10rem">
+                    <div class="flex align-items-center">
+                        Estado
                     </div>
                 </th>
                 <th style="min-width:10rem">Acciones</th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-people>
+        <ng-template pTemplate="body" let-area>
             <tr>
-                <td>{{people.firstName}}</td>
-                <td>{{people.lastName}}</td>
-                <td>{{people.documentNumber}}</td>
+                <td>{{area.name}}</td>
+                <td>{{area.description}}</td>
+                <td>{{area.status ? 'Activo' : 'Inactivo'}}</td>
                 <td>
                     <div class="flex justify-content-between">
                         <p-button icon="pi pi-eye" [rounded]="true" [text]="true" severity="secondary"
-                            (click)="showPerson(people.id)"></p-button>
+                            (click)="showArea(area.id)"></p-button>
                         <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" severity="info"
-                            (click)="updatePerson(people.id)"></p-button>
-                        <p-button pRipple icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger"
-                            (click)="deletePerson(people.id)"></p-button>
+                            (click)="updateArea(area.id)"></p-button>
+                        <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger"
+                            (click)="deleteArea(area.id)"></p-button>
                     </div>
                 </td>
             </tr>
@@ -64,5 +65,6 @@
     </p-table>
 </div>
 
-<app-people-show></app-people-show>
-<app-people-new-edit (dialogClosed)="onDialogClosed($event)"></app-people-new-edit>
+<app-area-show></app-area-show>
+<app-area-show-organization-chart></app-area-show-organization-chart>
+<app-area-new-edit (dialogClosed)="onDialogClosed($event)"></app-area-new-edit>
