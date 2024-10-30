@@ -3,6 +3,9 @@ import { BehaviorSubject } from 'rxjs';
 import { PeopleListComponent } from '../../app/components/people/people-list/people-list.component';
 import { MenuOptionsEnum } from '../../app/components/panel/panel.model';
 import { AreaListComponent } from '../../app/components/area/area-list/area-list.component';
+import { PositionListComponent } from '../../app/components/position/position-list/position-list.component';
+import { ComponentListComponent } from '../../app/components/component/component-list/component-list.component';
+import { RoleListComponent } from '../../app/components/role/role-list/role-list.component';
 
 @Injectable({
     providedIn: 'root'
@@ -18,6 +21,15 @@ export class ComponentLoaderService {
                 break;
             case MenuOptionsEnum.Areas:
                 this.componentToLoad.next(AreaListComponent);
+                break;
+            case MenuOptionsEnum.Cargos:
+                this.componentToLoad.next(PositionListComponent);
+                break;
+            case MenuOptionsEnum.Modulos:
+                this.componentToLoad.next(ComponentListComponent);
+                break;
+            case MenuOptionsEnum.Roles:
+                this.componentToLoad.next(RoleListComponent);
                 break;
             // case MenuOptionsEnum.Areas:
             //     this.componentToLoad.next(AreaListComponent);

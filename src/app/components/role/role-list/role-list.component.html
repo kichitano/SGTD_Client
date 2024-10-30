@@ -1,0 +1,62 @@
+<p-toast />
+<p-confirmDialog />
+
+<div class="button-block">
+    <label class="label-button-block">Lista de Roles</label>
+    <p-button label="Registrar Rol" icon="pi pi-plus" (onClick)="createRole()"></p-button>
+</div>
+
+<div class="table-block">
+    <p-table #dt1 [value]="roles" dataKey="id" [rows]="10" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true"
+        [globalFilterFields]="['name']">
+        <ng-template pTemplate="caption">
+            <div class="table-button-block">
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" [(ngModel)]="searchValue"
+                        (input)="applyFilterGlobal($event, 'contains')" (keydown.escape)="clearSearchText(dt1)"
+                        placeholder="Buscar rol" />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="min-width:15rem">
+                    <div class="flex align-items-center">
+                        Nombre
+                    </div>
+                </th>
+                <th style="min-width:15rem">
+                    <div class="flex align-items-center">
+                        Cantidad de Permisos
+                    </div>
+                </th>
+                <th style="min-width:10rem">Acciones</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-role>
+            <tr>
+                <td>{{role.name}}</td>
+                <td>{{role.permissionCount || 0}}</td>
+                <td>
+                    <div class="flex justify-content-between">
+                        <p-button icon="pi pi-eye" [rounded]="true" [text]="true" severity="secondary"
+                            (click)="showRole(role.id)"></p-button>
+                        <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" severity="info"
+                            (click)="updateRole(role.id)"></p-button>
+                        <p-button pRipple icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger"
+                            (click)="deleteRole(role.id)"></p-button>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="3">No se encontraron registros</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<!-- <app-role-show></app-role-show> -->
+<app-role-new-edit (dialogClosed)="onDialogClosed($event)"></app-role-new-edit>

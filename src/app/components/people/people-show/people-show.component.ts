@@ -67,10 +67,6 @@ export class PeopleShowComponent {
         next: (res) => {
           this.person = res;
           this.loadCountries();
-        },
-        error: (err: HttpErrorResponse) => {
-          // TODO: Mostrar toaster de PrimeNG para mensajes de error
-          // this.toastr.error(this.humanError.translate(err));
         }
       });
   }
