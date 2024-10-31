@@ -1,5 +1,5 @@
 <p-dialog #dialog [(visible)]="visible" [modal]="true" [header]="isEditMode ? 'Editar Rol' : 'Nuevo Rol'"
-    [maximizable]="true" [style]="{width: '40vw'}" styleClass="p-fluid">
+    [maximizable]="true" [style]="{width: '60vw'}" styleClass="p-fluid">
     <ng-template pTemplate="content">
         <div class="content-block">
             <div class="row-block">
@@ -67,7 +67,6 @@
         </div>
     </ng-template>
     <ng-template pTemplate="footer">
-        <p-divider />
         <button *ngIf="!isEditMode" pButton pRipple label="Guardar" icon="pi pi-check" class="p-button-text"
             (click)="createRole()"></button>
         <button *ngIf="isEditMode" pButton pRipple label="Actualizar" icon="pi pi-check" class="p-button-text"

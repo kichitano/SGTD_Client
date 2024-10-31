@@ -16,7 +16,7 @@ import { SpinnerPrimeNgService } from '../../../../shared/loader-spinner/spinner
 import { RoleService } from '../role.service';
 import { RoleModel } from '../role.model';
 import { RoleNewEditComponent } from '../role-new-edit/role-new-edit.component';
-// import { RoleShowComponent } from '../role-show/role-show.component';
+import { RoleShowComponent } from '../role-show/role-show.component';
 
 @Component({
   selector: 'app-role-list',
@@ -32,7 +32,7 @@ import { RoleNewEditComponent } from '../role-new-edit/role-new-edit.component';
     ConfirmDialogModule,
     ToastModule,
     RoleNewEditComponent,
-    // RoleShowComponent
+    RoleShowComponent
   ],
   providers: [ConfirmationService, MessageService],
   templateUrl: './role-list.component.html',
@@ -41,7 +41,7 @@ import { RoleNewEditComponent } from '../role-new-edit/role-new-edit.component';
 
 export class RoleListComponent {
   @ViewChild(RoleNewEditComponent) roleNewEditComponent!: RoleNewEditComponent;
-  // @ViewChild(RoleShowComponent) roleShowComponent!: RoleShowComponent;
+  @ViewChild(RoleShowComponent) roleShowComponent!: RoleShowComponent;
   @ViewChild('dt1') dt1: Table | undefined;
 
   unsubscribe$ = new Subject<void>();
@@ -79,7 +79,7 @@ export class RoleListComponent {
   }
 
   showRole(roleId: number) {
-    // this.roleShowComponent.showDialog(roleId);
+    this.roleShowComponent.showDialog(roleId);
   }
 
   updateRole(roleId: number) {

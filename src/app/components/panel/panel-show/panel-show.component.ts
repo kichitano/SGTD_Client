@@ -67,7 +67,7 @@ export class PanelShowComponent implements OnInit {
       case MenuOptionsEnum.Permisos:
         return 'pi pi-fw pi-shield';
       case MenuOptionsEnum.Roles:
-        return 'pi pi-fw pi-users-cog';
+        return 'pi pi-fw pi-objects-column';
       default:
         return '';
     }

@@ -21,17 +21,17 @@
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <th style="min-width:15rem">
+                <th scope="col" style="min-width:15rem">
                     <div class="flex align-items-center">
                         Nombre
                     </div>
                 </th>
-                <th style="min-width:15rem">
+                <th scope="col" style="min-width:15rem">
                     <div class="flex align-items-center">
                         Cantidad de Permisos
                     </div>
                 </th>
-                <th style="min-width:10rem">Acciones</th>
+                <th scope="col" style="min-width:10rem">Acciones</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-role>
@@ -58,5 +58,5 @@
     </p-table>
 </div>
 
-<!-- <app-role-show></app-role-show> -->
+<app-role-show></app-role-show>
 <app-role-new-edit (dialogClosed)="onDialogClosed($event)"></app-role-new-edit>

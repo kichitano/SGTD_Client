@@ -11,10 +11,10 @@ import { CountryModel } from "../models.model";
     providedIn: 'root'
 })
 export class CountryService {
-    private apiUrl = `${environment.apiUrl}/Country`;
+    private readonly apiUrl = `${environment.apiUrl}/Country`;
 
     constructor(
-        private http: HttpClient,
+        private readonly http: HttpClient,
     ) { }
 
     GetAllAsync(): Observable<CountryModel[]> {

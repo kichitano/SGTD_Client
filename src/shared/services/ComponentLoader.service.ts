@@ -11,7 +11,7 @@ import { RoleListComponent } from '../../app/components/role/role-list/role-list
     providedIn: 'root'
 })
 export class ComponentLoaderService {
-    private componentToLoad = new BehaviorSubject<Type<any> | null>(null);
+    private readonly componentToLoad = new BehaviorSubject<Type<any> | null>(null);
     currentComponent$ = this.componentToLoad.asObservable();
 
     loadComponent(componentName: string) {
