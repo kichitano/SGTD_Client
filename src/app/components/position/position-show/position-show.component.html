@@ -1,26 +1,26 @@
-<p-dialog #dialog [(visible)]="visible" [modal]="true" [header]="'Ver Área'" [maximizable]="true"
+<p-dialog #dialog [(visible)]="visible" [modal]="true" [header]="'Ver Posición'" [maximizable]="true"
     [style]="{width: '80vw'}" styleClass="p-fluid">
     <ng-template pTemplate="content">
         <div class="content-block">
             <div class="row-block">
                 <div class="row-item-block-35">
                     <p-floatLabel>
-                        <input id="name" type="text" pInputText [(ngModel)]="area.name" readonly class="readonly-input">
+                        <input id="name" type="text" pInputText [(ngModel)]="position.name" readonly
+                            class="readonly-input">
                         <label for="name">Nombre</label>
                     </p-floatLabel>
                 </div>
                 <div class="row-item-block-35">
                     <p-floatLabel>
-                        <input id="description" type="text" pInputText [(ngModel)]="area.description" readonly
+                        <input id="description" type="text" pInputText [(ngModel)]="position.description" readonly
                             class="readonly-input">
                         <label for="description">Descripción</label>
                     </p-floatLabel>
                 </div>
                 <div class="row-item-block-30">
                     <p-floatLabel>
-                        <input id="status" type="text" pInputText [ngModel]="area.status ? 'Activo' : 'Inactivo'"
-                            readonly class="readonly-input">
-                        <label for="status">Estado</label>
+                        <input id="area" type="text" pInputText [(ngModel)]="areaName" readonly class="readonly-input">
+                        <label for="area">Área</label>
                     </p-floatLabel>
                 </div>
             </div>
@@ -28,10 +28,13 @@
             <div class="row-block">
                 <div class="row-item-block-35">
                     <p-floatLabel>
-                        <input id="parentArea" type="text" pInputText [(ngModel)]="parentAreaName" readonly
+                        <input id="parentPosition" type="text" pInputText [(ngModel)]="parentPositionName" readonly
                             class="readonly-input">
-                        <label for="parentArea">Área Padre</label>
+                        <label for="parentPosition">Jefatura Directa</label>
                     </p-floatLabel>
+                </div>
+                <div class="row-item-block-65" *ngIf="selectedRoles.length > 0">
+                    <p-chips [ngModel]="selectedRoles" disabled [field]="'name'"></p-chips>
                 </div>
             </div>
         </div>

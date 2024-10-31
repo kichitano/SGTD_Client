@@ -1,0 +1,23 @@
+<p-dialog #dialog [(visible)]="visible" [modal]="true" [header]="isEditMode ? 'Editar Módulo' : 'Nuevo Módulo'"
+    [maximizable]="true" [style]="{width: '40vw'}" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="content-block">
+            <div class="row-block">
+                <div class="row-item-block-100">
+                    <p-floatLabel>
+                        <input id="name" type="text" pInputText [(ngModel)]="component.name" required>
+                        <label for="name">Nombre</label>
+                    </p-floatLabel>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button *ngIf="!isEditMode" pButton pRipple label="Guardar" icon="pi pi-check" class="p-button-text"
+            (click)="createComponent()"></button>
+        <button *ngIf="isEditMode" pButton pRipple label="Actualizar" icon="pi pi-check" class="p-button-text"
+            (click)="updateComponent()"></button>
+        <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" severity="secondary"
+            (click)="hideDialog()"></button>
+    </ng-template>
+</p-dialog>

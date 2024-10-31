@@ -1,0 +1,60 @@
+<p-dialog #dialog [(visible)]="visible" [modal]="true" [header]="'Ver Rol'" [maximizable]="true"
+    [style]="{width: '40vw'}" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="content-block">
+            <div class="row-block">
+                <div class="row-item-block-100">
+                    <p-floatLabel>
+                        <input id="name" type="text" pInputText [(ngModel)]="role.name" readonly class="readonly-input">
+                        <label for="name">Nombre</label>
+                    </p-floatLabel>
+                </div>
+            </div>
+            <div class="row-block">
+                <div class="row-item-block-100">
+                    <p-floatLabel>
+                        <input id="description" type="text" pInputText [(ngModel)]="role.description" readonly
+                            class="readonly-input">
+                        <label for="description">Descripción</label>
+                    </p-floatLabel>
+                </div>
+            </div>
+            <div class="row-block">
+                <div class="row-item-block-100">
+                    <p-table [value]="permissionMatrix" [scrollable]="true" scrollHeight="400px">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th scope="col" style="min-width: 200px">Módulo</th>
+                                <th scope="col" style="width: 100px">Crear</th>
+                                <th scope="col" style="width: 100px">Leer</th>
+                                <th scope="col" style="width: 100px">Modificar</th>
+                                <th scope="col" style="width: 100px">Eliminar</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-permission>
+                            <tr>
+                                <td>{{permission.componentName}}</td>
+                                <td class="text-center permission-symbol">
+                                    {{permission.create ? '✓' : '✗'}}
+                                </td>
+                                <td class="text-center permission-symbol">
+                                    {{permission.read ? '✓' : '✗'}}
+                                </td>
+                                <td class="text-center permission-symbol">
+                                    {{permission.update ? '✓' : '✗'}}
+                                </td>
+                                <td class="text-center permission-symbol">
+                                    {{permission.delete ? '✓' : '✗'}}
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" severity="secondary"
+            (click)="hideDialog()"></button>
+    </ng-template>
+</p-dialog>
