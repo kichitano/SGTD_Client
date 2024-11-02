@@ -17,6 +17,7 @@ import { PositionService } from '../position.service';
 import { PositionModel } from '../position.model';
 import { PositionNewEditComponent } from '../position-new-edit/position-new-edit.component';
 import { PositionShowComponent } from '../position-show/position-show.component';
+import { PositionShowPositionChartComponent } from '../position-show-position-chart/position-show-position-chart.component';
 
 @Component({
   selector: 'app-position-list',
@@ -32,7 +33,8 @@ import { PositionShowComponent } from '../position-show/position-show.component'
     ConfirmDialogModule,
     ToastModule,
     PositionNewEditComponent,
-    PositionShowComponent
+    PositionShowComponent,
+    PositionShowPositionChartComponent
   ],
   providers: [ConfirmationService, MessageService],
   templateUrl: './position-list.component.html',
@@ -41,6 +43,7 @@ import { PositionShowComponent } from '../position-show/position-show.component'
 export class PositionListComponent {
   @ViewChild(PositionNewEditComponent) positionNewEditComponent!: PositionNewEditComponent;
   @ViewChild(PositionShowComponent) positionShowComponent!: PositionShowComponent;
+  @ViewChild(PositionShowPositionChartComponent) positionShowPositionChartComponent!: PositionShowPositionChartComponent;
   @ViewChild('dt1') dt1: Table | undefined;
 
   unsubscribe$ = new Subject<void>();
@@ -119,4 +122,9 @@ export class PositionListComponent {
     }
     this.loadPositions();
   }
+
+  showPositionChart() {
+    this.positionShowPositionChartComponent.showDialog();
+  }
+
 }

@@ -1,0 +1,31 @@
+<p-dialog #dialog [(visible)]="visible" [modal]="true" [header]="'Ver Organigrama'" [maximizable]="true"
+    [style]="{width: '80vw'}" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <br />
+        <div class="row-block">
+            <div class="row-item-block-100">
+                <p-floatLabel>
+                    <p-autoComplete id="area" [(ngModel)]="selectedArea" [dropdown]="true" [suggestions]="filteredAreas"
+                        (completeMethod)="filterArea($event)" optionLabel="name" [forceSelection]="true" (onSelect)="loadPositionsByAreaId(selectedArea?.id ?? 0)"
+                        appendTo="body">
+                    </p-autoComplete>
+                    <label for="area">Área</label>
+                </p-floatLabel>
+            </div>
+        </div>
+        <div class="content-block" *ngIf="selectedArea?.id">
+            <p-organizationChart [value]="data" [collapsible]="true" styleClass="organization-chart">
+                <ng-template let-node pTemplate="area">
+                    <div class="node-content">
+                        <div class="node-header">{{node.data.name}}</div>
+                        <div class="node-description">{{node.data.description}}</div>
+                    </div>
+                </ng-template>
+            </p-organizationChart>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" severity="secondary"
+            (click)="hideDialog()"></button>
+    </ng-template>
+</p-dialog>

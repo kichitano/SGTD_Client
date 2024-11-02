@@ -44,4 +44,8 @@ export class PositionService {
     GetAllAsync(): Observable<PositionModel[]> {
         return this.http.get<PositionModel[]>(`${this.apiUrl}/`);
     }
+
+    GetAllByAreaIdAsync(areaId: number): Observable<PositionModel[]> {
+        return this.http.get<PositionModel[]>(`${this.apiUrl}/area/${areaId}`);
+    }
 }

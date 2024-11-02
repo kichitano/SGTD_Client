@@ -58,14 +58,8 @@ export class PanelShowComponent implements OnInit {
         return 'pi pi-fw pi-briefcase';
       case MenuOptionsEnum.Usuarios:
         return 'pi pi-fw pi-user';
-      case MenuOptionsEnum.TipoDocumentos:
-        return 'pi pi-fw pi-file';
-      case MenuOptionsEnum.Plantillas:
-        return 'pi pi-fw pi-file-edit';
       case MenuOptionsEnum.Modulos:
         return 'pi pi-fw pi-table';
-      case MenuOptionsEnum.Permisos:
-        return 'pi pi-fw pi-shield';
       case MenuOptionsEnum.Roles:
         return 'pi pi-fw pi-objects-column';
       default:

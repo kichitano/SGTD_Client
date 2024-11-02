@@ -3,6 +3,7 @@
 
 <div class="button-block">
     <label class="label-button-block">Lista de Posiciones</label>
+    <p-button label="Mostrar Jerarquias" icon="pi pi-sitemap" (onClick)="showPositionChart()"></p-button>
     <p-button label="Registrar Posición" icon="pi pi-plus" (onClick)="createPosition()"></p-button>
 </div>
 
@@ -59,4 +60,5 @@
 </div>
 
 <app-position-show></app-position-show>
+<app-position-show-position-chart></app-position-show-position-chart>
 <app-position-new-edit (dialogClosed)="onDialogClosed($event)"></app-position-new-edit>
