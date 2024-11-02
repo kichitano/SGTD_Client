@@ -152,7 +152,7 @@ export class RoleNewEditComponent {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (response) => {
-          this.savePermissions(response.id);
+          this.savePermissions(response);
         }
       });
   }

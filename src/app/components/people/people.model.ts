@@ -6,6 +6,7 @@ export interface PersonModel {
     nationalityCode: string;
     documentNumber: string;
     gender: boolean;
+    fullName?: string;
 }
 
 export interface GenderModel {

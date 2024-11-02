@@ -40,16 +40,11 @@
                     <p-floatLabel>
                         <p-autoComplete id="roles" [(ngModel)]="selectedRoles" [dropdown]="true"
                             [suggestions]="filteredRoles" (completeMethod)="filterRole($event)" optionLabel="name"
-                            [forceSelection]="true" [multiple]="true" appendTo="body">
+                            [forceSelection]="true" [multiple]="true" appendTo="body"
+                            [styleClass]="'custom-autocomplete'">
                         </p-autoComplete>
                         <label for="roles">Roles</label>
                     </p-floatLabel>
-                </div>
-            </div>
-
-            <div class="row-block" *ngIf="selectedRoles.length > 0">
-                <div class="row-item-block-100">
-                    <p-chips [ngModel]="selectedRoles" disabled [field]="'name'"></p-chips>
                 </div>
             </div>
         </div>

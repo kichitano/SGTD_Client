@@ -8,10 +8,10 @@ import { PositionRoleModel } from "./position-role.model";
     providedIn: 'root'
 })
 export class PositionRoleService {
-    private apiUrl = `${environment.apiUrl}/PositionRole`;
+    private readonly apiUrl = `${environment.apiUrl}/PositionRole`;
 
     constructor(
-        private http: HttpClient,
+        private readonly http: HttpClient,
     ) { }
 
     CreateAsync(positionRole: PositionRoleModel): Observable<HttpResponse<void>> {

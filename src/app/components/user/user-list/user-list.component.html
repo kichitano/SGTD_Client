@@ -1,0 +1,74 @@
+<p-toast />
+<p-confirmDialog />
+
+<div class="button-block">
+    <label class="label-button-block">Lista de Usuarios</label>
+    <p-button label="Registrar Usuario" icon="pi pi-plus" (onClick)="createUser()"></p-button>
+</div>
+
+<div class="table-block">
+    <p-table #dt1 [value]="users" dataKey="id" [rows]="10" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true"
+        [globalFilterFields]="['person.firstName', 'person.lastName', 'email', 'position.name']">
+        <ng-template pTemplate="caption">
+            <div class="table-button-block">
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" [(ngModel)]="searchValue"
+                        (input)="applyFilterGlobal($event, 'contains')" (keydown.escape)="clearSearchText(dt1)"
+                        placeholder="Buscar usuario" />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th scope="col" style="min-width:15rem">
+                    <div class="flex align-items-center">
+                        Nombres
+                    </div>
+                </th>
+                <th scope="col" style="min-width:15rem">
+                    <div class="flex align-items-center">
+                        Apellidos
+                    </div>
+                </th>
+                <th scope="col" style="min-width:15rem">
+                    <div class="flex align-items-center">
+                        Email
+                    </div>
+                </th>
+                <th scope="col" style="min-width:15rem">
+                    <div class="flex align-items-center">
+                        Cargo
+                    </div>
+                </th>
+                <th scope="col" style="min-width:10rem">Acciones</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-user>
+            <tr>
+                <td>{{user.person?.firstName}}</td>
+                <td>{{user.person?.lastName}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.position?.name}}</td>
+                <td>
+                    <div class="flex justify-content-between">
+                        <p-button icon="pi pi-eye" [rounded]="true" [text]="true" severity="secondary"
+                            (click)="showUser(user.userGuid)" onkeypress=""></p-button>
+                        <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" severity="info"
+                            (click)="updateUser(user.userGuid)" onkeypress=""></p-button>
+                        <p-button pRipple icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger"
+                            (click)="deleteUser(user.userGuid)" onkeypress=""></p-button>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="6">No se encontraron registros</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<!-- <app-user-show></app-user-show> -->
+<app-user-new-edit (dialogClosed)="onDialogClosed($event)"></app-user-new-edit>

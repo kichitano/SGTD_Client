@@ -84,12 +84,12 @@ export class PositionNewEditComponent {
     this.position.parentPositionId = this.selectedParentPosition?.id;
 
     this.spinnerPrimeNgService
-      .use(this.positionService.CreateAsync(this.position))
+      .use(this.positionService.CreateReturnIdAsync(this.position))
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (response) => {
           if (this.selectedRoles.length > 0) {
-            this.createPositionRoles(this.position.id);
+            this.createPositionRoles(response);
           } else {
             this.result = true;
             this.hideDialog();
