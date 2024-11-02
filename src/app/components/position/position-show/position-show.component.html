@@ -34,7 +34,10 @@
                     </p-floatLabel>
                 </div>
                 <div class="row-item-block-65" *ngIf="selectedRoles.length > 0">
-                    <p-chips [ngModel]="selectedRoles" disabled [field]="'name'"></p-chips>
+                    <p-floatLabel>
+                        <p-chips id="roles" [ngModel]="selectedRoles" disabled [field]="'name'"></p-chips>
+                        <label for="roles">Roles</label>
+                    </p-floatLabel>
                 </div>
             </div>
         </div>

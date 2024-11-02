@@ -8,14 +8,14 @@ import { RoleModel } from "./role.model";
     providedIn: 'root'
 })
 export class RoleService {
-    private apiUrl = `${environment.apiUrl}/Role`;
+    private readonly apiUrl = `${environment.apiUrl}/Role`;
 
     constructor(
-        private http: HttpClient,
+        private readonly http: HttpClient,
     ) { }
 
-    CreateReturnIdAsync(role: RoleModel): Observable<RoleModel> {
-        return this.http.post<RoleModel>(
+    CreateReturnIdAsync(role: RoleModel): Observable<number> {
+        return this.http.post<number>(
             `${this.apiUrl}/return`,
             role,
         );

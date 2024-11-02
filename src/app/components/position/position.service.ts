@@ -8,10 +8,10 @@ import { PositionModel } from "./position.model";
     providedIn: 'root'
 })
 export class PositionService {
-    private apiUrl = `${environment.apiUrl}/Position`;
+    private readonly apiUrl = `${environment.apiUrl}/Position`;
 
     constructor(
-        private http: HttpClient,
+        private readonly http: HttpClient,
     ) { }
 
     CreateAsync(position: PositionModel): Observable<HttpResponse<void>> {
@@ -19,6 +19,13 @@ export class PositionService {
             `${this.apiUrl}/`,
             position,
             { observe: 'response' }
+        );
+    }
+
+    CreateReturnIdAsync(position: PositionModel): Observable<number> {
+        return this.http.post<number>(
+            `${this.apiUrl}/return`,
+            position,
         );
     }
 

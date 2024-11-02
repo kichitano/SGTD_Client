@@ -6,6 +6,7 @@ import { AreaListComponent } from '../../app/components/area/area-list/area-list
 import { PositionListComponent } from '../../app/components/position/position-list/position-list.component';
 import { ComponentListComponent } from '../../app/components/component/component-list/component-list.component';
 import { RoleListComponent } from '../../app/components/role/role-list/role-list.component';
+import { UserListComponent } from '../../app/components/user/user-list/user-list.component';
 
 @Injectable({
     providedIn: 'root'
@@ -30,6 +31,9 @@ export class ComponentLoaderService {
                 break;
             case MenuOptionsEnum.Roles:
                 this.componentToLoad.next(RoleListComponent);
+                break;
+            case MenuOptionsEnum.Usuarios:
+                this.componentToLoad.next(UserListComponent);
                 break;
             // case MenuOptionsEnum.Areas:
             //     this.componentToLoad.next(AreaListComponent);
