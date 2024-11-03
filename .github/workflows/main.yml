@@ -21,9 +21,9 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4        
         with:
-          token: ${{ secrets.SGTD_TOKEN }}  # Añade esto para el checkout
+          persist-credentials: false # Añade esto
       # Setup nodeJS
       - name: Setup nodejs
         uses: actions/setup-node@v4.1.0
@@ -35,16 +35,10 @@ jobs:
       # Build app for production
       - name: Build app bundle
         run: npm run build:prod
-      # Configura git antes del deploy
-      - name: Setup Git Config
-        run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git config --global url."https://${{ secrets.SGTD_TOKEN }}@github.com/".insteadOf "https://github.com/"      
       # Deploy to Github pages
       - name: Deploy to Pages
-        uses: crazy-max/ghaction-github-pages@v4.1.0
+        uses: peaceiris/actions-gh-pages@v3 # Cambiamos a otra action
         with:
-          build_dir: dist/
-        env:
-          GITHUB_TOKEN: ${{ secrets.SGTD_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist/sgtd-client/browser # Ajusta esta ruta según tu build
+          force_orphan: true
