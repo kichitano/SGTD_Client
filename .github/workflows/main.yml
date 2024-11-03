@@ -22,6 +22,8 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.SGTD_TOKEN }}  # Añade esto para el checkout
       # Setup nodeJS
       - name: Setup nodejs
         uses: actions/setup-node@v4.1.0
@@ -33,10 +35,16 @@ jobs:
       # Build app for production
       - name: Build app bundle
         run: npm run build:prod
+      # Configura git antes del deploy
+      - name: Setup Git Config
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git config --global url."https://${{ secrets.SGTD_TOKEN }}@github.com/".insteadOf "https://github.com/"      
       # Deploy to Github pages
       - name: Deploy to Pages
         uses: crazy-max/ghaction-github-pages@v4.1.0
         with:
           build_dir: dist/
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.SGTD_TOKEN }}
