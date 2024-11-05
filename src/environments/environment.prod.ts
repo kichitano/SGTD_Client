@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    apiUrl: 'https://localhost:44313/api'
+    apiUrl: 'https://sgtd-webapi-hbeee6f2d3ffcmhh.eastus2-01.azurewebsites.net'
 };
