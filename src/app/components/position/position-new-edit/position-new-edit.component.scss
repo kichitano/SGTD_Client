@@ -1,0 +1,65 @@
+.content-block {
+    font-family: 'Roboto', sans-serif;
+    margin-top: 1.5rem;
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+}
+
+.row-block {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+
+    >* {
+        padding: 0 0.5rem;
+    }
+
+    > :first-child {
+        padding-left: 0;
+    }
+
+    > :last-child {
+        padding-right: 0;
+    }
+}
+
+.row-item-block-100 {
+    width: 100%;
+}
+
+.row-item-block-65 {
+    width: 65%;
+}
+
+.row-item-block-35 {
+    width: 35%;
+}
+
+.row-item-block-30 {
+    width: 30%;
+}
+
+:host ::ng-deep {
+    .custom-autocomplete {
+        .p-autocomplete-token {
+            background: var(--primary-500) !important;
+            color: white !important;
+            padding: 0.25rem 0.75rem;
+            margin: 0.25rem;
+            border-radius: 16px;
+
+            .p-autocomplete-token-label {
+                margin-right: 0.5rem;
+            }
+
+            .p-autocomplete-token-icon {
+                color: white !important;
+            }
+        }
+
+        .p-autocomplete-multiple-container {
+            padding: 0.25rem;
+        }
+    }
+}

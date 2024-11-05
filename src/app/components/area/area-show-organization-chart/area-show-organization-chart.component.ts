@@ -60,10 +60,7 @@ export class AreaShowOrganizationChartComponent {
   }
 
   private buildOrganizationChart() {
-    // Encontrar áreas raíz (sin padre)
     const rootAreas = this.areas.filter(area => !area.parentAreaId);
-
-    // Construir el árbol
     this.data = rootAreas.map(area => this.createNode(area));
   }
 
