@@ -67,10 +67,6 @@ export class PeopleShowComponent {
         next: (res) => {
           this.person = res;
           this.loadCountries();
-        },
-        error: (err: HttpErrorResponse) => {
-          // TODO: Mostrar toaster de PrimeNG para mensajes de error
-          // this.toastr.error(this.humanError.translate(err));
         }
       });
   }
@@ -81,7 +77,7 @@ export class PeopleShowComponent {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (res) => {
-          this.nationality = res.filter(q => q.code.match(this.person.nationalityCode))[0].name;
+          this.nationality = res.filter(q => RegExp(this.person.nationalityCode).exec(q.code))[0].name;
           this.gender = this.genders.filter(q => q.value == this.person.gender)[0].name;
         },
         error: (err: HttpErrorResponse) => {

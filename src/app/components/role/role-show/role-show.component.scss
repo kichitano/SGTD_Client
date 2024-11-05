@@ -1,0 +1,69 @@
+.content-block {
+    font-family: 'Roboto', sans-serif;
+    margin-top: 1.5rem;
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+}
+
+.row-block {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+
+    >* {
+        padding: 0 0.5rem;
+    }
+
+    > :first-child {
+        padding-left: 0;
+    }
+
+    > :last-child {
+        padding-right: 0;
+    }
+
+}
+
+.row-item-block-100 {
+    width: 100%;
+}
+
+.row-item-block-80 {
+    width: 80%;
+}
+
+.row-item-block-60 {
+    width: 60%;
+}
+
+.row-item-block-40 {
+    width: 40%;
+}
+
+.row-item-block-35 {
+    width: 35%;
+}
+
+.row-item-block-30 {
+    width: 30%;
+}
+
+.row-item-block-20 {
+    width: 20%;
+}
+
+.row-item-block-10 {
+    width: 10%;
+}
+
+.readonly-input {
+    background-color: transparent;
+    border: none;
+    pointer-events: none;
+}
+
+.readonly-input:focus {
+    outline: none;
+    box-shadow: none;
+}

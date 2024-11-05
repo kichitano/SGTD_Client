@@ -1,0 +1,75 @@
+<p-dialog #dialog [(visible)]="visible" [modal]="true" [header]="isEditMode ? 'Editar Usuario' : 'Nuevo Usuario'"
+    [maximizable]="true" [style]="{width: '80vw'}" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="content-block">
+            <div class="row-block">
+                <div class="row-item-block-40">
+                    <p-floatLabel>
+                        <p-autoComplete id="person" [(ngModel)]="selectedPerson" [dropdown]="true"
+                            [suggestions]="filteredPersons" (completeMethod)="filterPerson($event)" [field]="'fullName'"
+                            [forceSelection]="true" [disabled]="isEditMode" appendTo="body">
+                            <ng-template let-person pTemplate="item">
+                                {{person.firstName}} {{person.lastName}} - {{person.documentNumber}}
+                            </ng-template>
+                        </p-autoComplete>
+                        <label for="person">Persona</label>
+                    </p-floatLabel>
+                </div>
+                <div class="row-item-block-40">
+                    <p-floatLabel>
+                        <p-autoComplete id="position" [(ngModel)]="selectedPosition" [dropdown]="true"
+                            [suggestions]="filteredPositions" (completeMethod)="filterPosition($event)"
+                            optionLabel="name" [forceSelection]="true" appendTo="body">
+                        </p-autoComplete>
+                        <label for="position">Cargo</label>
+                    </p-floatLabel>
+                </div>
+                <div class="row-item-block-20">
+                    <div class="custom-float-label">
+                        <label>Espacio de Almacenamiento (MB)</label>
+                        <div class="storage-container">
+                            <p-slider [(ngModel)]="storageSizeMB" [min]="0" [max]="MAX_STORAGE_MB"
+                                class="storage-slider"></p-slider>
+                            <input type="text" pInputText [(ngModel)]="storageSizeMB" class="storage-input">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row-block">
+                <div class="row-item-block-45">
+                    <p-floatLabel>
+                        <input id="email" type="email" pInputText [(ngModel)]="user.email">
+                        <label for="email">Email</label>
+                    </p-floatLabel>
+                </div>
+                <div class="row-item-block-45">
+                    <p-floatLabel>
+                        <p-password id="password" [(ngModel)]="user.password" [toggleMask]="true" appendTo="body">
+                        </p-password>
+                        <label for="password">Contraseña</label>
+                    </p-floatLabel>
+                </div>
+                <div class="row-item-block-10">
+                    <div class="custom-float-label">
+                        <label>Estado</label>
+                        <div class="input-switch-container">
+                            <p-inputSwitch [(ngModel)]="user.status"></p-inputSwitch>
+                            <span>{{user.status ? 'Activo' : 'Inactivo'}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button *ngIf="!isEditMode" pButton pRipple label="Guardar" icon="pi pi-check" class="p-button-text"
+            (click)="createUser()"></button>
+        <button *ngIf="isEditMode" pButton pRipple label="Actualizar" icon="pi pi-check" class="p-button-text"
+            (click)="updateUser()"></button>
+        <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" severity="secondary"
+            (click)="hideDialog()"></button>
+    </ng-template>
+</p-dialog>

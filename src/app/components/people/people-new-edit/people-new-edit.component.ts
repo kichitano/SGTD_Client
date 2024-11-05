@@ -114,6 +114,9 @@ export class PeopleNewEditComponent {
   }
 
   updatePerson() {
+    this.person.nationalityCode = this.selectedCountry?.code ?? 'PE';
+    this.person.gender = this.selectedGender?.value ?? false;
+
     this.spinnerPrimeNgService
       .use(this.peopleService.UpdateAsync(this.person))
       .pipe(takeUntil(this.unsubscribe$))

@@ -1,0 +1,39 @@
+.content-block {
+    font-family: 'Roboto', sans-serif;
+    margin-top: 1.5rem;
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+}
+
+.row-block {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+
+    >* {
+        padding: 0 0.5rem;
+    }
+
+    > :first-child {
+        padding-left: 0;
+    }
+
+    > :last-child {
+        padding-right: 0;
+    }
+}
+
+.row-item-block-100 {
+    width: 100%;
+}
+
+:host ::ng-deep {
+    .text-center {
+        text-align: center;
+    }
+
+    .p-checkbox {
+        display: inline-flex;
+    }
+}
