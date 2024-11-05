@@ -28,7 +28,7 @@ export class ErrorHandlingInterceptor implements HttpInterceptor {
         });
 
         if (error.status === 500) {
-          console.error('Error no controlado:', error);
+          console.error('Error no controlado:', error.error);
         }
 
         return throwError(() => error);
