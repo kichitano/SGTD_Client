@@ -77,7 +77,7 @@ export class RoleNewEditComponent {
 
   private loadComponents() {
     this.spinnerPrimeNgService
-      .use(this.componentService.GetAllAsync())
+      .use(this.componentService.getAllAsync())
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (res) => {
@@ -90,13 +90,13 @@ export class RoleNewEditComponent {
   private loadRole(roleId: number) {
     this.spinnerPrimeNgService
       .use(
-        this.roleService.GetByIdAsync(roleId)
+        this.roleService.getByIdAsync(roleId)
           .pipe(
             switchMap(role => {
               this.role = role;
               return forkJoin({
-                rolePermissions: this.roleComponentPermissionService.GetByRoleIdAsync(roleId),
-                allPermissions: this.permissionService.GetAllAsync()
+                rolePermissions: this.roleComponentPermissionService.getByRoleIdAsync(roleId),
+                allPermissions: this.permissionService.getAllAsync()
               });
             })
           )
@@ -148,7 +148,7 @@ export class RoleNewEditComponent {
 
   createRole() {
     this.spinnerPrimeNgService
-      .use(this.roleService.CreateReturnIdAsync(this.role))
+      .use(this.roleService.createReturnIdAsync(this.role))
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (response) => {
@@ -159,7 +159,7 @@ export class RoleNewEditComponent {
 
   updateRole() {
     this.spinnerPrimeNgService
-      .use(this.roleService.UpdateAsync(this.role))
+      .use(this.roleService.updateAsync(this.role))
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: () => {
@@ -170,14 +170,14 @@ export class RoleNewEditComponent {
 
   private async savePermissions(roleId: number) {
     this.spinnerPrimeNgService
-      .use(this.permissionService.GetAllAsync())
+      .use(this.permissionService.getAllAsync())
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (permissions) => {
           const rolePermissions = this.buildRolePermissions(roleId, permissions);
           const serviceCall = this.isEditMode ?
-            this.roleComponentPermissionService.UpdateArrayAsync(roleId, rolePermissions) :
-            this.roleComponentPermissionService.CreateArrayAsync(rolePermissions);
+            this.roleComponentPermissionService.updateArrayAsync(roleId, rolePermissions) :
+            this.roleComponentPermissionService.createArrayAsync(rolePermissions);
 
           this.spinnerPrimeNgService
             .use(serviceCall)

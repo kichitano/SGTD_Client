@@ -96,7 +96,7 @@ export class UserNewEditComponent {
 
   private loadPersons() {
     this.spinnerPrimeNgService
-      .use(this.peopleService.GetAllAsync())
+      .use(this.peopleService.getAllAsync())
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (res) => {
@@ -107,7 +107,7 @@ export class UserNewEditComponent {
 
   private loadPositions() {
     this.spinnerPrimeNgService
-      .use(this.positionService.GetAllAsync())
+      .use(this.positionService.getAllAsync())
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (res) => {
@@ -118,7 +118,7 @@ export class UserNewEditComponent {
 
   private loadUser(userGuid: string) {
     this.spinnerPrimeNgService
-      .use(this.userService.GetByGuidAsync(userGuid))
+      .use(this.userService.getByGuidAsync(userGuid))
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (res) => {
@@ -143,7 +143,7 @@ export class UserNewEditComponent {
     this.user.storageSize = this.storageSizeMB * 1024 * 1024;
 
     this.spinnerPrimeNgService
-      .use(this.userService.CreateReturnGuidAsync(this.user))
+      .use(this.userService.createReturnGuidAsync(this.user))
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (res) => {
@@ -151,7 +151,7 @@ export class UserNewEditComponent {
           this.userPosition.userGuid = formattedId;
           this.userPosition.positionId = this.selectedPosition!.id;
           this.spinnerPrimeNgService
-            .use(this.userPositionService.CreateAsync(this.userPosition))
+            .use(this.userPositionService.createAsync(this.userPosition))
             .pipe(takeUntil(this.unsubscribe$))
             .subscribe({
               next: () => {
@@ -170,10 +170,10 @@ export class UserNewEditComponent {
     }
 
     this.user.personId = this.selectedPerson.id;
-    this.user.storageSize = this.storageSizeMB * 1024 * 1024;
+    this.user.storageSize = this.storageSizeMB;
 
     this.spinnerPrimeNgService
-      .use(this.userService.UpdateAsync(this.user))
+      .use(this.userService.updateAsync(this.user))
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: () => {
@@ -183,7 +183,7 @@ export class UserNewEditComponent {
           };
 
           this.spinnerPrimeNgService
-            .use(this.userPositionService.UpdateAsync(userPosition))
+            .use(this.userPositionService.updateAsync(userPosition))
             .pipe(takeUntil(this.unsubscribe$))
             .subscribe({
               next: () => {

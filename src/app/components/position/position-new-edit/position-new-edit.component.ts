@@ -84,7 +84,7 @@ export class PositionNewEditComponent {
     this.position.parentPositionId = this.selectedParentPosition?.id;
 
     this.spinnerPrimeNgService
-      .use(this.positionService.CreateReturnIdAsync(this.position))
+      .use(this.positionService.createReturnIdAsync(this.position))
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (response) => {
@@ -103,7 +103,7 @@ export class PositionNewEditComponent {
     this.position.parentPositionId = this.selectedParentPosition?.id;
 
     this.spinnerPrimeNgService
-      .use(this.positionService.UpdateAsync(this.position))
+      .use(this.positionService.updateAsync(this.position))
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: () => {
@@ -126,7 +126,7 @@ export class PositionNewEditComponent {
     let completedRoles = 0;
     positionRoles.forEach(positionRole => {
       this.spinnerPrimeNgService
-        .use(this.positionRoleService.CreateAsync(positionRole))
+        .use(this.positionRoleService.createAsync(positionRole))
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe({
           next: () => {
@@ -142,7 +142,7 @@ export class PositionNewEditComponent {
 
   private updatePositionRoles(positionId: number) {
     this.spinnerPrimeNgService
-      .use(this.positionRoleService.DeleteByPositionIdAsync(positionId))
+      .use(this.positionRoleService.deleteByPositionIdAsync(positionId))
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: () => {
@@ -162,7 +162,7 @@ export class PositionNewEditComponent {
 
   private loadAreas() {
     this.spinnerPrimeNgService
-      .use(this.areaService.GetAllAsync())
+      .use(this.areaService.getAllAsync())
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (res) => {
@@ -173,7 +173,7 @@ export class PositionNewEditComponent {
 
   private loadPositions() {
     this.spinnerPrimeNgService
-      .use(this.positionService.GetAllAsync())
+      .use(this.positionService.getAllAsync())
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (res) => {
@@ -184,7 +184,7 @@ export class PositionNewEditComponent {
 
   private loadRoles() {
     this.spinnerPrimeNgService
-      .use(this.roleService.GetAllAsync())
+      .use(this.roleService.getAllAsync())
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (res) => {
@@ -195,7 +195,7 @@ export class PositionNewEditComponent {
 
   private loadPosition(positionId: number) {
     this.spinnerPrimeNgService
-      .use(this.positionService.GetByIdAsync(positionId))
+      .use(this.positionService.getByIdAsync(positionId))
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (res) => {
@@ -213,7 +213,7 @@ export class PositionNewEditComponent {
 
   private loadPositionRoles(positionId: number) {
     this.spinnerPrimeNgService
-      .use(this.positionRoleService.GetByPositionIdAsync(positionId))
+      .use(this.positionRoleService.getByPositionIdAsync(positionId))
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (res) => {

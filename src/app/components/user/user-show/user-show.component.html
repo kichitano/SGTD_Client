@@ -1,0 +1,71 @@
+<p-dialog #dialog [(visible)]="visible" [modal]="true" [header]="'Ver Usuario'" [maximizable]="true"
+    [style]="{width: '80vw'}" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="content-block">
+            <div class="row-block">
+                <div class="row-item-block-35">
+                    <p-floatLabel>
+                        <input id="firstName" type="text" pInputText [ngModel]="user.person?.firstName" readonly
+                            class="readonly-input">
+                        <label for="firstName">Nombres</label>
+                    </p-floatLabel>
+                </div>
+                <div class="row-item-block-35">
+                    <p-floatLabel>
+                        <input id="lastName" type="text" pInputText [ngModel]="user.person?.lastName" readonly
+                            class="readonly-input">
+                        <label for="lastName">Apellidos</label>
+                    </p-floatLabel>
+                </div>
+                <div class="row-item-block-30">
+                    <p-floatLabel>
+                        <input id="position" type="text" pInputText [ngModel]="user.position?.name" readonly
+                            class="readonly-input">
+                        <label for="position">Cargo</label>
+                    </p-floatLabel>
+                </div>
+            </div>
+
+            <div class="row-block">
+                <div class="row-item-block-35">
+                    <p-floatLabel>
+                        <input id="email" type="email" pInputText [(ngModel)]="user.email" readonly
+                            class="readonly-input">
+                        <label for="email">Email</label>
+                    </p-floatLabel>
+                </div>
+                <div class="row-item-block-35">
+                    <p-floatLabel>
+                        <input id="documentNumber" type="text" pInputText [ngModel]="user.person?.documentNumber"
+                            readonly class="readonly-input">
+                        <label for="documentNumber">Numero de documento</label>
+                    </p-floatLabel>
+                </div>
+                <div class="row-item-block-30">
+                    <p-floatLabel>
+                        <input id="status" type="text" pInputText [ngModel]="user.status ? 'Activo' : 'Inactivo'"
+                            readonly class="readonly-input">
+                        <label for="status">Estado</label>
+                    </p-floatLabel>
+                </div>
+            </div>
+
+            <div class="row-block">
+                <div class="row-item-block-100">
+                    <div class="storage-meter">
+                        <label>Uso de Almacenamiento</label>
+                        <p-meterGroup [value]="storageMetrics"></p-meterGroup>
+                        <div class="storage-details">
+                            <span>{{user.usedStorage | number:'1.0-2'}} MB usado de {{user.storageSize |
+                                number:'1.0-2'}} MB</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cerrar" icon="pi pi-times" class="p-button-text" severity="secondary"
+            (click)="hideDialog()"></button>
+    </ng-template>
+</p-dialog>

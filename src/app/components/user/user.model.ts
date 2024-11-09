@@ -10,4 +10,5 @@ export interface UserModel {
     person?: PersonModel;
     position?: PositionModel;
     storageSize: number;
+    usedStorage: number;
 }

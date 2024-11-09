@@ -8,13 +8,13 @@ import { PermissionModel } from "./permission.model";
     providedIn: 'root'
 })
 export class PermissionService {
-    private apiUrl = `${environment.apiUrl}/Permission`;
+    private readonly apiUrl = `${environment.apiUrl}/Permission`;
 
     constructor(
-        private http: HttpClient
+        private readonly http: HttpClient
     ) { }
 
-    CreateAsync(requestParams: PermissionModel): Observable<HttpResponse<void>> {
+    createAsync(requestParams: PermissionModel): Observable<HttpResponse<void>> {
         return this.http.post<void>(
             `${this.apiUrl}/`,
             requestParams,
@@ -22,7 +22,7 @@ export class PermissionService {
         );
     }
 
-    UpdateAsync(requestParams: PermissionModel): Observable<HttpResponse<void>> {
+    updateAsync(requestParams: PermissionModel): Observable<HttpResponse<void>> {
         return this.http.put<void>(
             `${this.apiUrl}/`,
             requestParams,
@@ -30,15 +30,15 @@ export class PermissionService {
         );
     }
 
-    GetAllAsync(): Observable<PermissionModel[]> {
+    getAllAsync(): Observable<PermissionModel[]> {
         return this.http.get<PermissionModel[]>(`${this.apiUrl}/`);
     }
 
-    GetByIdAsync(id: number): Observable<PermissionModel> {
+    getByIdAsync(id: number): Observable<PermissionModel> {
         return this.http.get<PermissionModel>(`${this.apiUrl}/${id}`);
     }
 
-    DeleteByIdAsync(id: number): Observable<HttpResponse<void>> {
+    deleteByIdAsync(id: number): Observable<HttpResponse<void>> {
         return this.http.delete<void>(
             `${this.apiUrl}/${id}`,
             { observe: 'response' }

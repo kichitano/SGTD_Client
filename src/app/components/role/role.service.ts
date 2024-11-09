@@ -14,14 +14,14 @@ export class RoleService {
         private readonly http: HttpClient,
     ) { }
 
-    CreateReturnIdAsync(role: RoleModel): Observable<number> {
+    createReturnIdAsync(role: RoleModel): Observable<number> {
         return this.http.post<number>(
             `${this.apiUrl}/return`,
             role,
         );
     }
 
-    UpdateAsync(role: RoleModel): Observable<HttpResponse<void>> {
+    updateAsync(role: RoleModel): Observable<HttpResponse<void>> {
         return this.http.put<void>(
             `${this.apiUrl}/`,
             role,
@@ -29,11 +29,11 @@ export class RoleService {
         );
     }
 
-    GetByIdAsync(id: number): Observable<RoleModel> {
+    getByIdAsync(id: number): Observable<RoleModel> {
         return this.http.get<RoleModel>(`${this.apiUrl}/${id}`);
     }
 
-    GetAllAsync(): Observable<RoleModel[]> {
+    getAllAsync(): Observable<RoleModel[]> {
         return this.http.get<RoleModel[]>(`${this.apiUrl}/`);
     }
 }

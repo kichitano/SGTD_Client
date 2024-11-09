@@ -61,7 +61,7 @@ export class PeopleListComponent {
 
   loadPeople() {
     this.spinnerPrimeNgService
-      .use(this.peopleService.GetAllAsync())
+      .use(this.peopleService.getAllAsync())
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (res) => {

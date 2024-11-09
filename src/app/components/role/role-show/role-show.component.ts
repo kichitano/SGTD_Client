@@ -59,7 +59,7 @@ export class RoleShowComponent {
 
   private loadComponents() {
     this.spinnerPrimeNgService
-      .use(this.componentService.GetAllAsync())
+      .use(this.componentService.getAllAsync())
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (res) => {
@@ -83,13 +83,13 @@ export class RoleShowComponent {
   private loadRole(roleId: number) {
     this.spinnerPrimeNgService
       .use(
-        this.roleService.GetByIdAsync(roleId)
+        this.roleService.getByIdAsync(roleId)
           .pipe(
             switchMap(role => {
               this.role = role;
               return forkJoin({
-                rolePermissions: this.roleComponentPermissionService.GetByRoleIdAsync(roleId),
-                allPermissions: this.permissionService.GetAllAsync()
+                rolePermissions: this.roleComponentPermissionService.getByRoleIdAsync(roleId),
+                allPermissions: this.permissionService.getAllAsync()
               });
             })
           )
