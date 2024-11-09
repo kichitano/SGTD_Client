@@ -8,13 +8,13 @@ import { ComponentModel } from "./component.model";
     providedIn: 'root'
 })
 export class ComponentService {
-    private apiUrl = `${environment.apiUrl}/Component`;
+    private readonly apiUrl = `${environment.apiUrl}/Component`;
 
     constructor(
-        private http: HttpClient,
+        private readonly http: HttpClient,
     ) { }
 
-    CreateAsync(component: ComponentModel): Observable<HttpResponse<void>> {
+    createAsync(component: ComponentModel): Observable<HttpResponse<void>> {
         return this.http.post<void>(
             `${this.apiUrl}/`,
             component,
@@ -22,7 +22,7 @@ export class ComponentService {
         );
     }
 
-    UpdateAsync(component: ComponentModel): Observable<HttpResponse<void>> {
+    updateAsync(component: ComponentModel): Observable<HttpResponse<void>> {
         return this.http.put<void>(
             `${this.apiUrl}/`,
             component,
@@ -30,11 +30,11 @@ export class ComponentService {
         );
     }
 
-    GetByIdAsync(id: number): Observable<ComponentModel> {
+    getByIdAsync(id: number): Observable<ComponentModel> {
         return this.http.get<ComponentModel>(`${this.apiUrl}/${id}`);
     }
 
-    GetAllAsync(): Observable<ComponentModel[]> {
+    getAllAsync(): Observable<ComponentModel[]> {
         return this.http.get<ComponentModel[]>(`${this.apiUrl}/`);
     }
 }

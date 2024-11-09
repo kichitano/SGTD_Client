@@ -55,7 +55,7 @@ export class ComponentShowComponent {
 
   private loadComponent(componentId: number) {
     this.spinnerPrimeNgService
-      .use(this.componentService.GetByIdAsync(componentId))
+      .use(this.componentService.getByIdAsync(componentId))
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (res) => {

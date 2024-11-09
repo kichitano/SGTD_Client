@@ -66,7 +66,7 @@ export class ComponentListComponent {
   loadComponents() {
     this.cleanVariables();
     this.spinnerPrimeNgService
-      .use(this.componentService.GetAllAsync())
+      .use(this.componentService.getAllAsync())
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (res) => {

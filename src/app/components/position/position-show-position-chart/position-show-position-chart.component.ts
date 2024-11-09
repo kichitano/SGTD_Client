@@ -62,7 +62,7 @@ export class PositionShowPositionChartComponent {
 
   private loadAreas() {
     this.spinnerPrimeNgService
-      .use(this.areaService.GetAllAsync())
+      .use(this.areaService.getAllAsync())
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (res) => {
@@ -73,7 +73,7 @@ export class PositionShowPositionChartComponent {
 
   loadPositionsByAreaId(areaId: number) {
     this.spinnerPrimeNgService
-      .use(this.positionService.GetAllByAreaIdAsync(areaId))
+      .use(this.positionService.getAllByAreaIdAsync(areaId))
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (res) => {

@@ -8,13 +8,13 @@ import { UserPositionModel } from "./user-position.model";
     providedIn: 'root'
 })
 export class UserPositionService {
-    private apiUrl = `${environment.apiUrl}/UserPosition`;
+    private readonly apiUrl = `${environment.apiUrl}/UserPosition`;
 
     constructor(
-        private http: HttpClient
+        private readonly http: HttpClient
     ) { }
 
-    CreateAsync(userPosition: UserPositionModel): Observable<HttpResponse<void>> {
+    createAsync(userPosition: UserPositionModel): Observable<HttpResponse<void>> {
         return this.http.post<void>(
             `${this.apiUrl}/`,
             userPosition,
@@ -22,7 +22,7 @@ export class UserPositionService {
         );
     }
 
-    UpdateAsync(userPosition: UserPositionModel): Observable<HttpResponse<void>> {
+    updateAsync(userPosition: UserPositionModel): Observable<HttpResponse<void>> {
         return this.http.put<void>(
             `${this.apiUrl}/`,
             userPosition,
@@ -30,15 +30,15 @@ export class UserPositionService {
         );
     }
 
-    GetByIdAsync(id: number): Observable<UserPositionModel> {
+    getByIdAsync(id: number): Observable<UserPositionModel> {
         return this.http.get<UserPositionModel>(`${this.apiUrl}/${id}`);
     }
 
-    GetAllAsync(): Observable<UserPositionModel[]> {
+    getAllAsync(): Observable<UserPositionModel[]> {
         return this.http.get<UserPositionModel[]>(`${this.apiUrl}/`);
     }
 
-    DeleteByIdAsync(id: number): Observable<HttpResponse<void>> {
+    deleteByIdAsync(id: number): Observable<HttpResponse<void>> {
         return this.http.delete<void>(
             `${this.apiUrl}/${id}`,
             { observe: 'response' }

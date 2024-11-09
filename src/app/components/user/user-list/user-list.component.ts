@@ -17,7 +17,7 @@ import { SpinnerPrimeNgService } from '../../../../shared/loader-spinner/spinner
 import { UserService } from '../user.service';
 import { UserModel } from '../user.model';
 import { UserNewEditComponent } from '../user-new-edit/user-new-edit.component';
-// import { UserShowComponent } from '../user-show/user-show.component';
+import { UserShowComponent } from '../user-show/user-show.component';
 
 @Component({
   selector: 'app-user-list',
@@ -33,8 +33,8 @@ import { UserNewEditComponent } from '../user-new-edit/user-new-edit.component';
     ConfirmDialogModule,
     ToastModule,
     InputSwitchModule,
-    UserNewEditComponent
-    // UserShowComponent
+    UserNewEditComponent,
+    UserShowComponent
   ],
   providers: [ConfirmationService, MessageService],
   templateUrl: './user-list.component.html',
@@ -42,7 +42,7 @@ import { UserNewEditComponent } from '../user-new-edit/user-new-edit.component';
 })
 export class UserListComponent {
   @ViewChild(UserNewEditComponent) userNewEditComponent!: UserNewEditComponent;
-  // @ViewChild(UserShowComponent) userShowComponent!: UserShowComponent;
+  @ViewChild(UserShowComponent) userShowComponent!: UserShowComponent;
   @ViewChild('dt1') dt1: Table | undefined;
 
   unsubscribe$ = new Subject<void>();
@@ -66,7 +66,7 @@ export class UserListComponent {
   loadUsers() {
     this.cleanVariables();
     this.spinnerPrimeNgService
-      .use(this.userService.GetAllAsync())
+      .use(this.userService.getAllAsync())
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (res) => {
@@ -79,8 +79,8 @@ export class UserListComponent {
     this.userNewEditComponent.showDialog();
   }
 
-  showUser(userId: number) {
-    // this.userShowComponent.showDialog(userId);
+  showUser(userGuid: string) {
+    this.userShowComponent.showDialog(userGuid);
   }
 
   updateUser(userGuid: string) {
@@ -98,7 +98,7 @@ export class UserListComponent {
       rejectButtonStyleClass: 'p-button-text',
       accept: () => {
         this.spinnerPrimeNgService
-          .use(this.userService.DeleteByIdAsync(userId))
+          .use(this.userService.deleteByIdAsync(userId))
           .pipe(takeUntil(this.unsubscribe$))
           .subscribe({
             next: () => {

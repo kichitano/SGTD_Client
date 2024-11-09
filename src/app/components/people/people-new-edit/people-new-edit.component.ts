@@ -91,7 +91,7 @@ export class PeopleNewEditComponent {
     this.person.gender = this.selectedGender?.value ?? false;
 
     this.spinnerPrimeNgService
-      .use(this.peopleService.CreateAsync(this.person))
+      .use(this.peopleService.createAsync(this.person))
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: () => {
@@ -103,7 +103,7 @@ export class PeopleNewEditComponent {
 
   loadPerson(personId: number) {
     this.spinnerPrimeNgService
-      .use(this.peopleService.GetByIdAsync(personId))
+      .use(this.peopleService.getByIdAsync(personId))
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (res) => {
@@ -118,7 +118,7 @@ export class PeopleNewEditComponent {
     this.person.gender = this.selectedGender?.value ?? false;
 
     this.spinnerPrimeNgService
-      .use(this.peopleService.UpdateAsync(this.person))
+      .use(this.peopleService.updateAsync(this.person))
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: () => {

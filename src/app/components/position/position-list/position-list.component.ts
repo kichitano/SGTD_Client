@@ -69,7 +69,7 @@ export class PositionListComponent {
   loadPositions() {
     this.cleanVariables();
     this.spinnerPrimeNgService
-      .use(this.positionService.GetAllAsync())
+      .use(this.positionService.getAllAsync())
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (res) => {

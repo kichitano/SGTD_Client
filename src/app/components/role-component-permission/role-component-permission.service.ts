@@ -14,7 +14,7 @@ export class RoleComponentPermissionService {
         private readonly http: HttpClient
     ) { }
 
-    CreateAsync(requestParams: RoleComponentPermissionModel): Observable<HttpResponse<void>> {
+    createAsync(requestParams: RoleComponentPermissionModel): Observable<HttpResponse<void>> {
         return this.http.post<void>(
             `${this.apiUrl}/`,
             requestParams,
@@ -22,7 +22,7 @@ export class RoleComponentPermissionService {
         );
     }
 
-    CreateArrayAsync(permissions: RoleComponentPermissionModel[]): Observable<HttpResponse<void>> {
+    createArrayAsync(permissions: RoleComponentPermissionModel[]): Observable<HttpResponse<void>> {
         return this.http.post<void>(
             `${this.apiUrl}/array`,
             permissions,
@@ -30,7 +30,7 @@ export class RoleComponentPermissionService {
         );
     }
 
-    UpdateAsync(requestParams: RoleComponentPermissionModel): Observable<HttpResponse<void>> {
+    updateAsync(requestParams: RoleComponentPermissionModel): Observable<HttpResponse<void>> {
         return this.http.put<void>(
             `${this.apiUrl}/`,
             requestParams,
@@ -38,7 +38,7 @@ export class RoleComponentPermissionService {
         );
     }
 
-    UpdateArrayAsync(roleId: number, permissions: RoleComponentPermissionModel[]): Observable<HttpResponse<void>> {
+    updateArrayAsync(roleId: number, permissions: RoleComponentPermissionModel[]): Observable<HttpResponse<void>> {
         return this.http.put<void>(
             `${this.apiUrl}/array/${roleId}`,
             permissions,
@@ -46,19 +46,19 @@ export class RoleComponentPermissionService {
         );
     }
 
-    GetAllAsync(): Observable<RoleComponentPermissionModel[]> {
+    getAllAsync(): Observable<RoleComponentPermissionModel[]> {
         return this.http.get<RoleComponentPermissionModel[]>(`${this.apiUrl}/`);
     }
 
-    GetByIdAsync(id: number): Observable<RoleComponentPermissionModel> {
+    getByIdAsync(id: number): Observable<RoleComponentPermissionModel> {
         return this.http.get<RoleComponentPermissionModel>(`${this.apiUrl}/${id}`);
     }
 
-    GetByRoleIdAsync(roleId: number): Observable<RoleComponentPermissionModel[]> {
+    getByRoleIdAsync(roleId: number): Observable<RoleComponentPermissionModel[]> {
         return this.http.get<RoleComponentPermissionModel[]>(`${this.apiUrl}/role/${roleId}`);
     }
 
-    DeleteByIdAsync(id: number): Observable<HttpResponse<void>> {
+    deleteByIdAsync(id: number): Observable<HttpResponse<void>> {
         return this.http.delete<void>(
             `${this.apiUrl}/${id}`,
             { observe: 'response' }

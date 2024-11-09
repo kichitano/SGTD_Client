@@ -14,7 +14,7 @@ export class PositionService {
         private readonly http: HttpClient,
     ) { }
 
-    CreateAsync(position: PositionModel): Observable<HttpResponse<void>> {
+    createAsync(position: PositionModel): Observable<HttpResponse<void>> {
         return this.http.post<void>(
             `${this.apiUrl}/`,
             position,
@@ -22,14 +22,14 @@ export class PositionService {
         );
     }
 
-    CreateReturnIdAsync(position: PositionModel): Observable<number> {
+    createReturnIdAsync(position: PositionModel): Observable<number> {
         return this.http.post<number>(
             `${this.apiUrl}/return`,
             position,
         );
     }
 
-    UpdateAsync(position: PositionModel): Observable<HttpResponse<void>> {
+    updateAsync(position: PositionModel): Observable<HttpResponse<void>> {
         return this.http.put<void>(
             `${this.apiUrl}/`,
             position,
@@ -37,15 +37,15 @@ export class PositionService {
         );
     }
 
-    GetByIdAsync(id: number): Observable<PositionModel> {
+    getByIdAsync(id: number): Observable<PositionModel> {
         return this.http.get<PositionModel>(`${this.apiUrl}/${id}`);
     }
 
-    GetAllAsync(): Observable<PositionModel[]> {
+    getAllAsync(): Observable<PositionModel[]> {
         return this.http.get<PositionModel[]>(`${this.apiUrl}/`);
     }
 
-    GetAllByAreaIdAsync(areaId: number): Observable<PositionModel[]> {
+    getAllByAreaIdAsync(areaId: number): Observable<PositionModel[]> {
         return this.http.get<PositionModel[]>(`${this.apiUrl}/area/${areaId}`);
     }
 }

@@ -58,7 +58,7 @@ export class AreaListComponent {
 
   loadAreas() {
     this.spinnerPrimeNgService
-      .use(this.areaService.GetAllAsync())
+      .use(this.areaService.getAllAsync())
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (res) => {
