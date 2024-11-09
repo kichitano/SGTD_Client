@@ -1,23 +1,10 @@
 import { Routes } from '@angular/router';
-
-// export const routes: Routes = [
-//     {
-//         path: 'panel',
-//         children: [
-//             {
-//                 path: 'show',
-//                 loadComponent: () => import('./components/panel/panel-show/panel-show.component')
-//                     .then(m => m.PanelShowComponent)
-//             },
-//             { path: '', redirectTo: 'show', pathMatch: 'full' } // Redirige a 'show' por defecto
-//         ]
-//     },
-//     { path: '', redirectTo: '/panel/show', pathMatch: 'full' } // Ruta raíz redirige a panel/show
-// ];
+import { AuthGuard } from '../guard/auth.guard';
 
 export const routes: Routes = [
     {
         path: 'panel',
+        // canActivate: [AuthGuard],
         children: [
             {
                 path: 'show',
@@ -27,5 +14,10 @@ export const routes: Routes = [
             { path: '', redirectTo: 'show', pathMatch: 'full' }
         ]
     },
-    { path: '', redirectTo: '/panel/show', pathMatch: 'full' }
+    {
+        path: 'login',
+        loadComponent: () => import('./components/login/login-show/login-show.component')
+            .then(m => m.LoginShowComponent)
+    },
+    { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];

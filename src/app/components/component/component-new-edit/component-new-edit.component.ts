@@ -53,7 +53,7 @@ export class ComponentNewEditComponent {
 
   createComponent() {
     this.spinnerPrimeNgService
-      .use(this.componentService.CreateAsync(this.component))
+      .use(this.componentService.createAsync(this.component))
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: () => {
@@ -65,7 +65,7 @@ export class ComponentNewEditComponent {
 
   updateComponent() {
     this.spinnerPrimeNgService
-      .use(this.componentService.UpdateAsync(this.component))
+      .use(this.componentService.updateAsync(this.component))
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: () => {
@@ -91,7 +91,7 @@ export class ComponentNewEditComponent {
 
   private loadComponent(componentId: number) {
     this.spinnerPrimeNgService
-      .use(this.componentService.GetByIdAsync(componentId))
+      .use(this.componentService.getByIdAsync(componentId))
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (res) => {

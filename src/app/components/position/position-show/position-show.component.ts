@@ -69,7 +69,7 @@ export class PositionShowComponent {
 
   private loadPosition(positionId: number) {
     this.spinnerPrimeNgService
-      .use(this.positionService.GetByIdAsync(positionId))
+      .use(this.positionService.getByIdAsync(positionId))
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (res) => {
@@ -87,7 +87,7 @@ export class PositionShowComponent {
 
   private loadArea(areaId: number) {
     this.spinnerPrimeNgService
-      .use(this.areaService.GetByIdAsync(areaId))
+      .use(this.areaService.getByIdAsync(areaId))
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (res) => {
@@ -98,7 +98,7 @@ export class PositionShowComponent {
 
   private loadParentPosition(parentPositionId: number) {
     this.spinnerPrimeNgService
-      .use(this.positionService.GetByIdAsync(parentPositionId))
+      .use(this.positionService.getByIdAsync(parentPositionId))
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (res) => {
@@ -109,13 +109,13 @@ export class PositionShowComponent {
 
   private loadPositionRoles(positionId: number) {
     this.spinnerPrimeNgService
-      .use(this.positionRoleService.GetByPositionIdAsync(positionId))
+      .use(this.positionRoleService.getByPositionIdAsync(positionId))
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (positionRoles) => {
           positionRoles.forEach(pr => {
             this.spinnerPrimeNgService
-              .use(this.roleService.GetByIdAsync(pr.roleId))
+              .use(this.roleService.getByIdAsync(pr.roleId))
               .pipe(takeUntil(this.unsubscribe$))
               .subscribe({
                 next: (role) => {

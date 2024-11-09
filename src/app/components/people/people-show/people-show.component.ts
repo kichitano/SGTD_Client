@@ -1,11 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DialogModule } from 'primeng/dialog';
-import { DividerModule } from 'primeng/divider';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputSwitchModule } from 'primeng/inputswitch';
@@ -16,7 +15,6 @@ import { Subject, takeUntil } from 'rxjs';
 import { SpinnerPrimeNgService } from '../../../../shared/loader-spinner/spinner-primeng.service';
 import { CountryService } from '../../../../shared/services/Country.service';
 import { PeopleService } from '../people.service';
-import { CountryModel } from '../../../../shared/models.model';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 
 @Component({
@@ -33,8 +31,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     ButtonModule,
     InputSwitchModule,
     AutoCompleteModule,
-    FloatLabelModule,
-    DividerModule
+    FloatLabelModule
   ],
   templateUrl: './people-show.component.html',
   styleUrl: './people-show.component.scss'
@@ -61,7 +58,7 @@ export class PeopleShowComponent {
 
   loadPerson(personId: number) {
     this.spinnerPrimeNgService
-      .use(this.peopleService.GetByIdAsync(personId))
+      .use(this.peopleService.getByIdAsync(personId))
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (res) => {

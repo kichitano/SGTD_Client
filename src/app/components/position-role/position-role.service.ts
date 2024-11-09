@@ -14,7 +14,7 @@ export class PositionRoleService {
         private readonly http: HttpClient,
     ) { }
 
-    CreateAsync(positionRole: PositionRoleModel): Observable<HttpResponse<void>> {
+    createAsync(positionRole: PositionRoleModel): Observable<HttpResponse<void>> {
         return this.http.post<void>(
             `${this.apiUrl}/`,
             positionRole,
@@ -22,14 +22,14 @@ export class PositionRoleService {
         );
     }
 
-    DeleteByPositionIdAsync(positionId: number): Observable<HttpResponse<void>> {
+    deleteByPositionIdAsync(positionId: number): Observable<HttpResponse<void>> {
         return this.http.delete<void>(
             `${this.apiUrl}/position/${positionId}`,
             { observe: 'response' }
         );
     }
 
-    GetByPositionIdAsync(positionId: number): Observable<PositionRoleModel[]> {
+    getByPositionIdAsync(positionId: number): Observable<PositionRoleModel[]> {
         return this.http.get<PositionRoleModel[]>(`${this.apiUrl}/position/${positionId}`);
     }
 }

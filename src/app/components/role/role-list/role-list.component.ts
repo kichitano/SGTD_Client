@@ -65,7 +65,7 @@ export class RoleListComponent {
   loadRoles() {
     this.cleanVariables();
     this.spinnerPrimeNgService
-      .use(this.roleService.GetAllAsync())
+      .use(this.roleService.getAllAsync())
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (res) => {

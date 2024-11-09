@@ -52,7 +52,7 @@ export class AreaShowComponent {
 
   private loadArea(areaId: number) {
     this.spinnerPrimeNgService
-      .use(this.areaService.GetByIdAsync(areaId))
+      .use(this.areaService.getByIdAsync(areaId))
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (res) => {
@@ -66,7 +66,7 @@ export class AreaShowComponent {
 
   private loadParentArea(parentAreaId: number) {
     this.spinnerPrimeNgService
-      .use(this.areaService.GetByIdAsync(parentAreaId))
+      .use(this.areaService.getByIdAsync(parentAreaId))
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (res) => {

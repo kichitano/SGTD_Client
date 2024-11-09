@@ -11,13 +11,13 @@ import { PersonModel } from "./people.model";
     providedIn: 'root'
 })
 export class PeopleService {
-    private apiUrl = `${environment.apiUrl}/Person`;
+    private readonly apiUrl = `${environment.apiUrl}/Person`;
 
     constructor(
-        private http: HttpClient,
+        private readonly http: HttpClient,
     ) { }
 
-    CreateAsync(person: PersonModel): Observable<HttpResponse<void>> {
+    createAsync(person: PersonModel): Observable<HttpResponse<void>> {
         return this.http.post<void>(
             `${this.apiUrl}/`,
             {
@@ -32,7 +32,7 @@ export class PeopleService {
         );
     }
 
-    UpdateAsync(person: PersonModel): Observable<HttpResponse<void>> {
+    updateAsync(person: PersonModel): Observable<HttpResponse<void>> {
         return this.http.put<void>(
             `${this.apiUrl}/`,
             {
@@ -48,11 +48,11 @@ export class PeopleService {
         );
     }
 
-    GetByIdAsync(personId: number): Observable<PersonModel> {
+    getByIdAsync(personId: number): Observable<PersonModel> {
         return this.http.get<PersonModel>(`${this.apiUrl}/${personId}`);
     }
 
-    GetAllAsync(): Observable<PersonModel[]> {
+    getAllAsync(): Observable<PersonModel[]> {
         return this.http.get<PersonModel[]>(`${this.apiUrl}/`);
     }
 }

@@ -8,13 +8,13 @@ import { AreaDependencyModel } from '../area/area.model';
     providedIn: 'root'
 })
 export class AreaDependencyService {
-    private apiUrl = `${environment.apiUrl}/AreaDependency`;
+    private readonly apiUrl = `${environment.apiUrl}/AreaDependency`;
 
     constructor(
-        private http: HttpClient
+        private readonly http: HttpClient
     ) { }
 
-    CreateAsync(areaDependency: AreaDependencyModel): Observable<HttpResponse<void>> {
+    createAsync(areaDependency: AreaDependencyModel): Observable<HttpResponse<void>> {
         return this.http.post<void>(
             `${this.apiUrl}/`,
             {
@@ -25,7 +25,7 @@ export class AreaDependencyService {
         );
     }
 
-    UpdateAsync(areaDependency: AreaDependencyModel): Observable<HttpResponse<void>> {
+    updateAsync(areaDependency: AreaDependencyModel): Observable<HttpResponse<void>> {
         return this.http.put<void>(
             `${this.apiUrl}/`,
             {
@@ -37,15 +37,15 @@ export class AreaDependencyService {
         );
     }
 
-    GetByIdAsync(areaDependencyId: number): Observable<AreaDependencyModel> {
+    getByIdAsync(areaDependencyId: number): Observable<AreaDependencyModel> {
         return this.http.get<AreaDependencyModel>(`${this.apiUrl}/${areaDependencyId}`);
     }
 
-    GetAllAsync(): Observable<AreaDependencyModel[]> {
+    getAllAsync(): Observable<AreaDependencyModel[]> {
         return this.http.get<AreaDependencyModel[]>(`${this.apiUrl}/`);
     }
 
-    DeleteAsync(areaDependencyId: number): Observable<HttpResponse<void>> {
+    deleteAsync(areaDependencyId: number): Observable<HttpResponse<void>> {
         return this.http.delete<void>(
             `${this.apiUrl}/${areaDependencyId}`,
             { observe: 'response' }

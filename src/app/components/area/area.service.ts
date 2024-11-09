@@ -8,13 +8,13 @@ import { AreaModel } from "./area.model";
     providedIn: 'root'
 })
 export class AreaService {
-    private apiUrl = `${environment.apiUrl}/Area`;
+    private readonly apiUrl = `${environment.apiUrl}/Area`;
 
     constructor(
-        private http: HttpClient,
+        private readonly http: HttpClient,
     ) { }
 
-    CreateAsync(area: AreaModel): Observable<HttpResponse<void>> {
+    createAsync(area: AreaModel): Observable<HttpResponse<void>> {
         return this.http.post<void>(
             `${this.apiUrl}/`,
             {
@@ -27,7 +27,7 @@ export class AreaService {
         );
     }
 
-    UpdateAsync(area: AreaModel): Observable<HttpResponse<void>> {
+    updateAsync(area: AreaModel): Observable<HttpResponse<void>> {
         return this.http.put<void>(
             `${this.apiUrl}/`,
             {
@@ -41,11 +41,11 @@ export class AreaService {
         );
     }
 
-    GetByIdAsync(areaId: number): Observable<AreaModel> {
+    getByIdAsync(areaId: number): Observable<AreaModel> {
         return this.http.get<AreaModel>(`${this.apiUrl}/${areaId}`);
     }
 
-    GetAllAsync(): Observable<AreaModel[]> {
+    getAllAsync(): Observable<AreaModel[]> {
         return this.http.get<AreaModel[]>(`${this.apiUrl}/`);
     }
 }

@@ -59,7 +59,7 @@ export class AreaNewEditComponent {
   createArea() {
     this.area.parentAreaId = this.selectedParentArea?.id;
     this.spinnerPrimeNgService
-      .use(this.areaService.CreateAsync(this.area))
+      .use(this.areaService.createAsync(this.area))
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: () => {
@@ -71,7 +71,7 @@ export class AreaNewEditComponent {
 
   loadAreas(areaId?: number) {
     this.spinnerPrimeNgService
-      .use(this.areaService.GetAllAsync())
+      .use(this.areaService.getAllAsync())
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (res) => {
@@ -89,7 +89,7 @@ export class AreaNewEditComponent {
 
   loadArea(areaId: number) {
     this.spinnerPrimeNgService
-      .use(this.areaService.GetByIdAsync(areaId))
+      .use(this.areaService.getByIdAsync(areaId))
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (res) => {
@@ -102,7 +102,7 @@ export class AreaNewEditComponent {
 
   loadAreaDependency(areaId: number) {
     this.spinnerPrimeNgService
-      .use(this.areaService.GetByIdAsync(areaId))
+      .use(this.areaService.getByIdAsync(areaId))
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (res) => {
@@ -115,7 +115,7 @@ export class AreaNewEditComponent {
   updateArea() {
     this.area.parentAreaId = this.selectedParentArea?.id;
     this.spinnerPrimeNgService
-      .use(this.areaService.UpdateAsync(this.area))
+      .use(this.areaService.updateAsync(this.area))
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: () => {

@@ -14,7 +14,7 @@ export class UserService {
         private readonly http: HttpClient
     ) { }
 
-    CreateAsync(user: UserModel): Observable<HttpResponse<void>> {
+    createAsync(user: UserModel): Observable<HttpResponse<void>> {
         return this.http.post<void>(
             `${this.apiUrl}/`,
             user,
@@ -22,14 +22,14 @@ export class UserService {
         );
     }
 
-    CreateReturnGuidAsync(position: UserModel): Observable<string> {
+    createReturnGuidAsync(position: UserModel): Observable<string> {
         return this.http.post<string>(
             `${this.apiUrl}/return`,
             position,
         );
     }
 
-    UpdateAsync(user: UserModel): Observable<HttpResponse<void>> {
+    updateAsync(user: UserModel): Observable<HttpResponse<void>> {
         return this.http.put<void>(
             `${this.apiUrl}/`,
             user,
@@ -37,15 +37,15 @@ export class UserService {
         );
     }
 
-    GetByGuidAsync(guid: string): Observable<UserModel> {
+    getByGuidAsync(guid: string): Observable<UserModel> {
         return this.http.get<UserModel>(`${this.apiUrl}/${guid}`);
     }
 
-    GetAllAsync(): Observable<UserModel[]> {
+    getAllAsync(): Observable<UserModel[]> {
         return this.http.get<UserModel[]>(`${this.apiUrl}/`);
     }
 
-    DeleteByIdAsync(id: number): Observable<HttpResponse<void>> {
+    deleteByIdAsync(id: number): Observable<HttpResponse<void>> {
         return this.http.delete<void>(
             `${this.apiUrl}/${id}`,
             { observe: 'response' }
