@@ -1,6 +1,7 @@
-<div class="image-container">
+<div class="image-container" (click)="clearContainer()" style="cursor: pointer;">
     <img src="assets/logo.jpg" alt="Logo" appImageBleed>
 </div>
+
 <p-menubar class="menu-bar" [model]="menuItems" />
 <div class="content-container">
     <p-card class="card-content">

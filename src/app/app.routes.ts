@@ -7,11 +7,11 @@ export const routes: Routes = [
         // canActivate: [AuthGuard],
         children: [
             {
-                path: 'show',
+                path: '',
                 loadComponent: () => import('./components/panel/panel-show/panel-show.component')
                     .then(m => m.PanelShowComponent)
             },
-            { path: '', redirectTo: 'show', pathMatch: 'full' }
+            { path: '', redirectTo: '', pathMatch: 'full' },
         ]
     },
     {
@@ -19,5 +19,5 @@ export const routes: Routes = [
         loadComponent: () => import('./components/login/login-show/login-show.component')
             .then(m => m.LoginShowComponent)
     },
-    { path: '', redirectTo: '/login', pathMatch: 'full' }
+    { path: '', redirectTo: '/panel', pathMatch: 'full' }
 ];

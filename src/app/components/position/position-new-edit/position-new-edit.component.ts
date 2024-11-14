@@ -53,28 +53,20 @@ export class PositionNewEditComponent {
   filteredPositions: PositionModel[] = [];
   selectedParentPosition: PositionModel | undefined;
 
-  roles: RoleModel[] = [];
-  filteredRoles: RoleModel[] = [];
-  selectedRoles: RoleModel[] = [];
-
   isEditMode = false;
   visible = false;
   result = false;
 
   constructor(
     private readonly spinnerPrimeNgService: SpinnerPrimeNgService,
-    private readonly messageService: MessageService,
     private readonly positionService: PositionService,
     private readonly areaService: AreaService,
-    private readonly roleService: RoleService,
-    private readonly positionRoleService: PositionRoleService
   ) { }
 
   private cleanVariables() {
     this.position = {} as PositionModel;
     this.selectedArea = undefined;
     this.selectedParentPosition = undefined;
-    this.selectedRoles = [];
     this.isEditMode = false;
     this.result = false;
   }
@@ -84,16 +76,12 @@ export class PositionNewEditComponent {
     this.position.parentPositionId = this.selectedParentPosition?.id;
 
     this.spinnerPrimeNgService
-      .use(this.positionService.createReturnIdAsync(this.position))
+      .use(this.positionService.createAsync(this.position))
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
-        next: (response) => {
-          if (this.selectedRoles.length > 0) {
-            this.createPositionRoles(response);
-          } else {
-            this.result = true;
-            this.hideDialog();
-          }
+        next: () => {
+          this.result = true;
+          this.hideDialog();
         }
       });
   }
@@ -107,54 +95,15 @@ export class PositionNewEditComponent {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: () => {
-          if (this.selectedRoles.length > 0) {
-            this.updatePositionRoles(this.position.id);
-          } else {
-            this.result = true;
-            this.hideDialog();
-          }
+          this.result = true;
+          this.hideDialog();
         }
       });
-  }
-
-  private createPositionRoles(positionId: number) {
-    const positionRoles = this.selectedRoles.map(role => ({
-      positionId: positionId,
-      roleId: role.id
-    } as PositionRoleModel));
-
-    let completedRoles = 0;
-    positionRoles.forEach(positionRole => {
-      this.spinnerPrimeNgService
-        .use(this.positionRoleService.createAsync(positionRole))
-        .pipe(takeUntil(this.unsubscribe$))
-        .subscribe({
-          next: () => {
-            completedRoles++;
-            if (completedRoles === positionRoles.length) {
-              this.result = true;
-              this.hideDialog();
-            }
-          }
-        });
-    });
-  }
-
-  private updatePositionRoles(positionId: number) {
-    this.spinnerPrimeNgService
-      .use(this.positionRoleService.deleteByPositionIdAsync(positionId))
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe({
-        next: () => {
-          this.createPositionRoles(positionId);
-        }
-      });
-  }
+  }  
 
   loadData(positionId?: number) {
     this.loadAreas();
     this.loadPositions();
-    this.loadRoles();
     if (positionId) {
       this.loadPosition(positionId);
     }
@@ -180,18 +129,7 @@ export class PositionNewEditComponent {
           this.positions = res;
         }
       });
-  }
-
-  private loadRoles() {
-    this.spinnerPrimeNgService
-      .use(this.roleService.getAllAsync())
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe({
-        next: (res) => {
-          this.roles = res;
-        }
-      });
-  }
+  }  
 
   private loadPosition(positionId: number) {
     this.spinnerPrimeNgService
@@ -206,23 +144,9 @@ export class PositionNewEditComponent {
           if (this.position.parentPositionId) {
             this.selectedParentPosition = this.positions.find(p => p.id === this.position.parentPositionId);
           }
-          this.loadPositionRoles(positionId);
         }
       });
-  }
-
-  private loadPositionRoles(positionId: number) {
-    this.spinnerPrimeNgService
-      .use(this.positionRoleService.getByPositionIdAsync(positionId))
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe({
-        next: (res) => {
-          this.selectedRoles = this.roles.filter(role =>
-            res.some(pr => pr.roleId === role.id)
-          );
-        }
-      });
-  }
+  }  
 
   showDialog(positionId?: number) {
     this.cleanVariables();
@@ -262,18 +186,5 @@ export class PositionNewEditComponent {
     }
 
     this.filteredPositions = filtered;
-  }
-
-  filterRole(event: { query: string }) {
-    const filtered: RoleModel[] = [];
-    const query = event.query.toLowerCase();
-
-    for (const role of this.roles) {
-      if (role.name.toLowerCase().includes(query)) {
-        filtered.push(role);
-      }
-    }
-
-    this.filteredRoles = filtered;
   }
 }

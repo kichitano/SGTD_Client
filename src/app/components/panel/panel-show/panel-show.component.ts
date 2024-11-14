@@ -4,7 +4,7 @@ import { MenubarModule } from 'primeng/menubar';
 import { MenuItem } from 'primeng/api';
 import { CardModule } from 'primeng/card';
 import { ComponentLoaderService } from '../../../../shared/services/ComponentLoader.service';
-import { MenuOptionsEnum } from '../panel.model';
+import { MenuOptionsEnum, UserMenuOptionsEnum } from '../panel.model';
 
 
 @Component({
@@ -42,6 +42,8 @@ export class PanelShowComponent implements OnInit {
         this.containerRef.createComponent(component);
       }
     });
+
+    this.loadPanel(UserMenuOptionsEnum.OpcionesUsuario);
   }
 
   loadPanel(componentName: string) {
@@ -65,6 +67,11 @@ export class PanelShowComponent implements OnInit {
       default:
         return '';
     }
+  }
+
+  clearContainer() {
+    this.containerRef.clear();
+    this.loadPanel(UserMenuOptionsEnum.OpcionesUsuario);
   }
 
 }
