@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -22,7 +22,8 @@ import { FloatLabelModule } from 'primeng/floatlabel';
     ButtonModule,
     InputTextModule,
     PasswordModule,
-    FloatLabelModule
+    FloatLabelModule,
+    RouterModule
   ],
   templateUrl: './login-show.component.html',
   styleUrls: ['./login-show.component.scss']
@@ -60,17 +61,28 @@ export class LoginShowComponent {
       .use(this.authService.login(loginData))
       .subscribe({
         next: (response) => {
-          this.authService.setSession(response);
-          this.router.navigate(['/panel/show']);
+          if (response.success) {
+            this.authService.setSession(response);
+            this.router.navigate(['/panel']).then(() => {
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Éxito',
+                detail: '¡Bienvenido!',
+                life: 3000
+              });
+            });
+          } else {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Credenciales inválidas',
+              life: 3000
+            });
+          }
         },
         error: (error) => {
-          // this.messageService.add({
-          //   severity: 'error',
-          //   summary: 'Error',
-          //   detail: 'Credenciales inválidas',
-          //   life: 3000
-          // });
-        }
+          this.loginForm.get('password')?.reset();
+        },
       });
   }
 }

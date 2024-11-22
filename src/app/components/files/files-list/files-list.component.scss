@@ -1,0 +1,120 @@
+:host ::ng-deep .file-upload-dialog {
+    .p-dialog-content {
+        overflow: hidden;
+        padding: 0;
+    }
+
+    .upload-container {
+        padding: 1rem;
+    }
+
+    .files-container {
+        .pending-files {
+            width: 100%;
+        }
+
+        .files-scroll {
+            display: flex;
+            overflow-x: auto;
+            gap: 1rem;
+            padding: 1rem 0;
+
+            /* Estilizar la barra de scroll */
+            &::-webkit-scrollbar {
+                height: 8px;
+            }
+
+            &::-webkit-scrollbar-track {
+                background: var(--surface-ground);
+                border-radius: 4px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background: var(--surface-border);
+                border-radius: 4px;
+            }
+        }
+
+        .file-card {
+            flex: 0 0 250px;
+            /* Ancho fijo para cada tarjeta */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem;
+            border: 1px solid var(--surface-border);
+            border-radius: 0.5rem;
+            background: var(--surface-card);
+            transition: all 0.2s ease;
+
+            &:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+
+            .file-icon {
+                font-size: 2rem;
+                margin-bottom: 0.5rem;
+
+                i {
+                    width: 2rem;
+                    height: 2rem;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
+
+            .file-info {
+                text-align: center;
+                width: 100%;
+
+                .file-name {
+                    display: block;
+                    font-weight: 500;
+                    margin-bottom: 0.25rem;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+
+                .file-size {
+                    font-size: 0.875rem;
+                    color: var(--text-color-secondary);
+                }
+            }
+
+            .file-actions {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                margin-top: 0.75rem;
+            }
+        }
+    }
+
+    .empty-state {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 3rem;
+
+        i {
+            font-size: 3rem;
+            color: var(--text-color-secondary);
+            margin-bottom: 1rem;
+        }
+
+        p {
+            color: var(--text-color-secondary);
+            margin: 0;
+        }
+    }
+}
+
+:host ::ng-deep .p-fileupload-content .p-fileupload-row {
+    display: none;
+    width: 0px;
+    height: 0px;
+}

@@ -17,6 +17,10 @@ import { CalendarModule } from 'primeng/calendar';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { UserRoleService } from '../../user-role/user-role.service';
+import { RoleService } from '../../role/role.service';
+import { RoleModel } from '../../role/role.model';
+import { ChipsModule } from 'primeng/chips';
 
 @Component({
   selector: 'app-user-show',
@@ -33,7 +37,8 @@ import { InputSwitchModule } from 'primeng/inputswitch';
     InputSwitchModule,
     AutoCompleteModule,
     FloatLabelModule,
-    MeterGroupModule
+    MeterGroupModule,
+    ChipsModule
   ],
   templateUrl: './user-show.component.html',
   styleUrl: './user-show.component.scss'
@@ -43,12 +48,20 @@ export class UserShowComponent {
   unsubscribe$ = new Subject<void>();
 
   user: UserModel = {} as UserModel;
+  selectedRoles: RoleModel[] = [];
   visible = false;
-  storageMetrics: any;
+  storageMetrics: any[] = [{
+    label: 'Archivos',
+    value: 0,
+    color: '#4CAF50',
+    textColor: '#000000'
+  }];
 
   constructor(
     private readonly spinnerPrimeNgService: SpinnerPrimeNgService,
-    private readonly userService: UserService
+    private readonly userService: UserService,
+    private readonly userRoleService: UserRoleService,
+    private readonly roleService: RoleService
   ) { }
 
   loadUser(userGuid: string) {
@@ -60,13 +73,45 @@ export class UserShowComponent {
           this.user = res;
           this.user.usedStorage = 0;
           this.calculateStorageMetrics();
+          this.loadUserRoles(userGuid);
+        }
+      });
+  }
+
+  private loadUserRoles(userGuid: string) {
+    this.spinnerPrimeNgService
+      .use(this.userRoleService.getByUserGuidAsync(userGuid))
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe({
+        next: (positionRoles) => {
+          positionRoles.forEach(pr => {
+            this.spinnerPrimeNgService
+              .use(this.roleService.getByIdAsync(pr.roleId))
+              .pipe(takeUntil(this.unsubscribe$))
+              .subscribe({
+                next: (role) => {
+                  this.selectedRoles.push(role);
+                }
+              });
+          });
         }
       });
   }
 
   private calculateStorageMetrics() {
     const usedStorageMB = this.user.usedStorage ?? 0;
-    const totalStorageMB = this.user.storageSize;
+    const totalStorageMB = this.user.storageSize ?? 1;
+
+    if (totalStorageMB <= 0) {
+      this.storageMetrics = [{
+        label: 'Archivos',
+        value: 0,
+        color: '#4CAF50',
+        textColor: '#000000'
+      }];
+      return;
+    }
+
     const usedPercentage = (usedStorageMB / totalStorageMB) * 100;
 
     this.storageMetrics = [{
@@ -83,7 +128,19 @@ export class UserShowComponent {
     return '#4CAF50';
   }
 
+  private cleanVariables() {
+    this.user = {} as UserModel;
+    this.storageMetrics = [{
+      label: 'Archivos',
+      value: 0,
+      color: '#4CAF50',
+      textColor: '#000000'
+    }];
+    this.selectedRoles = [];
+  }
+
   showDialog(userGuid: string) {
+    this.cleanVariables();
     this.loadUser(userGuid);
     this.visible = true;
   }

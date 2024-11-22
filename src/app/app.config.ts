@@ -6,6 +6,8 @@ import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@a
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ErrorHandlingInterceptor } from '../shared/interceptors/error-handling.interceptor';
 import { MessageService } from 'primeng/api';
+import { TokenHandlingInterceptor } from '../shared/interceptors/token-handling.interceptor';
+import { AuthGuard } from '../guard/auth.guard';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -16,6 +18,11 @@ export const appConfig: ApplicationConfig = {
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorHandlingInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenHandlingInterceptor,
       multi: true
     },
     provideHttpClient(withInterceptorsFromDi())

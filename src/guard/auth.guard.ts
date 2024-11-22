@@ -1,22 +1,27 @@
-import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { inject } from '@angular/core';
+import { Router, type CanActivateFn } from '@angular/router';
 import { AuthService } from '../app/components/login/auth.service';
+import { MessageService } from 'primeng/api';
 
-@Injectable({
-    providedIn: 'root'
-})
-export class AuthGuard implements CanActivate {
-    constructor(
-        private readonly authService: AuthService,
-        private readonly router: Router
-    ) {}
-
-    canActivate(): boolean {
-        if (this.authService.isAuthenticated()) {
-            return true;
-        }
-        
-        this.router.navigate(['/login']);
-        return false;
+export const AuthGuard: CanActivateFn = (route, state) => {
+    const authService = inject(AuthService);
+    const router = inject(Router);
+    const messageService = inject(MessageService);
+    
+    if (authService.isAuthenticated()) {
+        return true;
     }
-}
+
+    messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Sesión no válida',
+        life: 3000
+    });
+    
+    router.navigate(['/login'], {
+        queryParams: { returnUrl: state.url }
+    });
+    
+    return false;
+};

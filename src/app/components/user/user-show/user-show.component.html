@@ -50,14 +50,22 @@
                 </div>
             </div>
 
+            <div class="row-block" *ngIf="selectedRoles.length > 0">
+                <div class="row-item-block-100">
+                    <p-floatLabel>
+                        <p-chips id="roles" [ngModel]="selectedRoles" disabled [field]="'name'"></p-chips>
+                        <label for="roles">Roles</label>
+                    </p-floatLabel>
+                </div>
+            </div>
+
             <div class="row-block">
                 <div class="row-item-block-100">
                     <div class="storage-meter">
-                        <label>Uso de Almacenamiento</label>
-                        <p-meterGroup [value]="storageMetrics"></p-meterGroup>
+                        <label for="">Uso de Almacenamiento</label>
+                        <p-meterGroup [value]="storageMetrics" *ngIf="storageMetrics.length > 0"></p-meterGroup>
                         <div class="storage-details">
-                            <span>{{user.usedStorage | number:'1.0-2'}} MB usado de {{user.storageSize |
-                                number:'1.0-2'}} MB</span>
+                            <span>{{user.usedStorage | number:'1.0-2'}} MB usado de {{user.storageSize | number:'1.0-2'}} MB</span>
                         </div>
                     </div>
                 </div>

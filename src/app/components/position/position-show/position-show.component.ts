@@ -28,8 +28,7 @@ import { RoleModel } from '../../role/role.model';
     ButtonModule,
     DividerModule,
     InputTextModule,
-    FloatLabelModule,
-    ChipsModule
+    FloatLabelModule
   ],
   templateUrl: './position-show.component.html',
   styleUrl: './position-show.component.scss'
@@ -40,32 +39,12 @@ export class PositionShowComponent {
   position: PositionModel = {} as PositionModel;
   areaName: string = '';
   parentPositionName: string = '';
-  selectedRoles: RoleModel[] = [];
 
   constructor(
     private readonly spinnerPrimeNgService: SpinnerPrimeNgService,
     private readonly positionService: PositionService,
     private readonly areaService: AreaService,
-    private readonly roleService: RoleService,
-    private readonly positionRoleService: PositionRoleService
-  ) { }
-
-  private cleanVariables() {
-    this.position = {} as PositionModel;
-    this.areaName = '';
-    this.parentPositionName = '';
-    this.selectedRoles = [];
-  }
-
-  showDialog(positionId: number) {
-    this.cleanVariables();
-    this.loadPosition(positionId);
-    this.visible = true;
-  }
-
-  hideDialog() {
-    this.visible = false;
-  }
+  ) { }  
 
   private loadPosition(positionId: number) {
     this.spinnerPrimeNgService
@@ -80,7 +59,6 @@ export class PositionShowComponent {
           if (this.position.parentPositionId) {
             this.loadParentPosition(this.position.parentPositionId);
           }
-          this.loadPositionRoles(positionId);
         }
       });
   }
@@ -107,23 +85,19 @@ export class PositionShowComponent {
       });
   }
 
-  private loadPositionRoles(positionId: number) {
-    this.spinnerPrimeNgService
-      .use(this.positionRoleService.getByPositionIdAsync(positionId))
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe({
-        next: (positionRoles) => {
-          positionRoles.forEach(pr => {
-            this.spinnerPrimeNgService
-              .use(this.roleService.getByIdAsync(pr.roleId))
-              .pipe(takeUntil(this.unsubscribe$))
-              .subscribe({
-                next: (role) => {
-                  this.selectedRoles.push(role);
-                }
-              });
-          });
-        }
-      });
+  private cleanVariables() {
+    this.position = {} as PositionModel;
+    this.areaName = '';
+    this.parentPositionName = '';
+  }
+
+  showDialog(positionId: number) {
+    this.cleanVariables();
+    this.loadPosition(positionId);
+    this.visible = true;
+  }
+
+  hideDialog() {
+    this.visible = false;
   }
 }
