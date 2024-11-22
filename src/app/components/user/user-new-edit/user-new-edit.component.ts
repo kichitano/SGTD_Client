@@ -17,12 +17,16 @@ import { SliderModule } from 'primeng/slider';
 import { SpinnerPrimeNgService } from '../../../../shared/loader-spinner/spinner-primeng.service';
 import { UserService } from '../user.service';
 import { UserModel } from '../user.model';
-import { PositionModel } from '../../position/position.model';
+import { PositionModel, PositionRoleModel } from '../../position/position.model';
 import { PositionService } from '../../position/position.service';
 import { PersonModel } from '../../people/people.model';
 import { PeopleService } from '../../people/people.service';
 import { UserPositionService } from '../../user-position/user-position.service';
 import { UserPositionModel } from '../../user-position/user-position.model';
+import { RoleModel } from '../../role/role.model';
+import { RoleService } from '../../role/role.service';
+import { UserRoleModel } from '../../user-role/user-role.model';
+import { UserRoleService } from '../../user-role/user-role.service';
 
 @Component({
   selector: 'app-user-new-edit',
@@ -58,6 +62,10 @@ export class UserNewEditComponent {
   filteredPositions: PositionModel[] = [];
   selectedPosition: PositionModel | undefined;
 
+  roles: RoleModel[] = [];
+  filteredRoles: RoleModel[] = [];
+  selectedRoles: RoleModel[] = [];
+
   userPosition: UserPositionModel = {} as UserPositionModel;
 
   isEditMode = false;
@@ -71,8 +79,10 @@ export class UserNewEditComponent {
     private readonly userService: UserService,
     private readonly peopleService: PeopleService,
     private readonly positionService: PositionService,
+    private readonly userRoleService: UserRoleService,
     private readonly userPositionService: UserPositionService,
-    private readonly messageService: MessageService
+    private readonly messageService: MessageService,
+    private readonly roleService: RoleService,
   ) { }
 
   private cleanVariables() {
@@ -80,6 +90,7 @@ export class UserNewEditComponent {
     this.storageSizeMB = 50;
     this.selectedPerson = undefined;
     this.selectedPosition = undefined;
+    this.selectedRoles = [];
     this.isEditMode = false;
     this.result = false;
   }
@@ -87,6 +98,7 @@ export class UserNewEditComponent {
   loadData(userGuid?: string) {
     this.loadPersons();
     this.loadPositions();
+    this.loadRoles();
     if (userGuid) {
       this.loadUser(userGuid);
     } else {
@@ -116,19 +128,30 @@ export class UserNewEditComponent {
       });
   }
 
+  private loadRoles() {
+    this.spinnerPrimeNgService
+      .use(this.roleService.getAllAsync())
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe({
+        next: (res) => {
+          this.roles = res;
+        }
+      });
+  }
+
   private loadUser(userGuid: string) {
     this.spinnerPrimeNgService
       .use(this.userService.getByGuidAsync(userGuid))
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (res) => {
-          console.log(res);
           this.user = res;
           this.storageSizeMB = this.user.storageSize / (1024 * 1024);
           this.selectedPerson = this.user.person;
           if (this.selectedPerson)
             this.selectedPerson.fullName = `${this.user.person?.firstName} ${this.user.person?.lastName} - ${this.user.person?.documentNumber}`;
           this.selectedPosition = this.user.position;
+          this.loadUserRoles(userGuid);
         }
       });
   }
@@ -155,8 +178,12 @@ export class UserNewEditComponent {
             .pipe(takeUntil(this.unsubscribe$))
             .subscribe({
               next: () => {
-                this.result = true;
-                this.hideDialog();
+                if (this.selectedRoles.length > 0) {
+                  this.createUserRoles(this.userPosition.userGuid);
+                } else {
+                  this.result = true;
+                  this.hideDialog();
+                }
               }
             });
         }
@@ -187,10 +214,61 @@ export class UserNewEditComponent {
             .pipe(takeUntil(this.unsubscribe$))
             .subscribe({
               next: () => {
-                this.result = true;
-                this.hideDialog();
+                if (this.selectedRoles.length > 0) {
+                  this.updateUserRoles(this.userPosition.userGuid);
+                } else {
+                  this.result = true;
+                  this.hideDialog();
+                }
               }
             });
+        }
+      });
+  }
+
+  private createUserRoles(userGuid: string) {
+    const userRoles = this.selectedRoles.map(role => ({
+      userGuid: userGuid,
+      roleId: role.id
+    } as UserRoleModel));
+
+    let completedRoles = 0;
+    userRoles.forEach(userRole => {
+      this.spinnerPrimeNgService
+        .use(this.userRoleService.createAsync(userRole))
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe({
+          next: () => {
+            completedRoles++;
+            if (completedRoles === userRoles.length) {
+              this.result = true;
+              this.hideDialog();
+            }
+          }
+        });
+    });
+  }
+
+  private updateUserRoles(userGuid: string) {
+    this.spinnerPrimeNgService
+      .use(this.userRoleService.deleteByUserGuidAsync(userGuid))
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe({
+        next: () => {
+          this.createUserRoles(userGuid);
+        }
+      });
+  }
+
+  private loadUserRoles(userGuid: string) {
+    this.spinnerPrimeNgService
+      .use(this.userRoleService.getByUserGuidAsync(userGuid))
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe({
+        next: (res) => {
+          this.selectedRoles = this.roles.filter(role =>
+            res.some(pr => pr.roleId === role.id)
+          );
         }
       });
   }
@@ -235,5 +313,18 @@ export class UserNewEditComponent {
     }
 
     this.filteredPositions = filtered;
+  }
+
+  filterRole(event: { query: string }) {
+    const filtered: RoleModel[] = [];
+    const query = event.query.toLowerCase();
+
+    for (const role of this.roles) {
+      if (role.name.toLowerCase().includes(query)) {
+        filtered.push(role);
+      }
+    }
+
+    this.filteredRoles = filtered;
   }
 }

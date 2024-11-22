@@ -7,7 +7,7 @@ import { ERROR_MESSAGES } from '../models.model';
 
 @Injectable()
 export class ErrorHandlingInterceptor implements HttpInterceptor {
-  constructor(private messageService: MessageService) { }
+  constructor(private readonly messageService: MessageService) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(

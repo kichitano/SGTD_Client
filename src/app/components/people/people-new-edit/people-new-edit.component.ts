@@ -79,7 +79,7 @@ export class PeopleNewEditComponent {
         next: (res) => {
           this.countries = res;
           if (this.isEditMode) {
-            this.selectedCountry = res.filter(q => q.code.match(this.person.nationalityCode))[0];
+            this.selectedCountry = res.filter(q => RegExp(this.person.nationalityCode).exec(q.code))[0];
             this.selectedGender = this.genders.filter(q => q.value == this.person.gender)[0];
           }
         }

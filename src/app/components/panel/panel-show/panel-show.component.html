@@ -1,7 +1,15 @@
-<div class="image-container">
+<div class="image-container" (click)="clearContainer()" style="cursor: pointer;">
     <img src="assets/logo.jpg" alt="Logo" appImageBleed>
 </div>
-<p-menubar class="menu-bar" [model]="menuItems" />
+
+<p-menubar class="menu-bar" [model]="menuItems">
+    <ng-template pTemplate="end">
+        <div class="flex align-items-center gap-2">
+            <p-button icon="pi pi-sign-out" styleClass="p-button-rounded p-button-text p-button-danger"
+                (click)="logout()" pTooltip="Cerrar Sesión" tooltipPosition="left"></p-button>
+        </div>
+    </ng-template>
+</p-menubar>
 <div class="content-container">
     <p-card class="card-content">
         <ng-container #dynamicComponentContainer></ng-container>

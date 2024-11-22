@@ -6,3 +6,8 @@ export enum MenuOptionsEnum {
     Modulos = 'modulos',
     Roles = 'roles'
 }
+
+export enum UserMenuOptionsEnum {
+    OpcionesUsuario = 'opcionesUsuario',
+    ArchivosUsuario = 'archivosUsuario'
+}
