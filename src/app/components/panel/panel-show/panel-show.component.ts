@@ -5,6 +5,10 @@ import { MenuItem } from 'primeng/api';
 import { CardModule } from 'primeng/card';
 import { ComponentLoaderService } from '../../../../shared/services/ComponentLoader.service';
 import { MenuOptionsEnum, UserMenuOptionsEnum } from '../panel.model';
+import { ButtonModule } from 'primeng/button';
+import { Router } from '@angular/router';
+import { SpinnerPrimeNgService } from '../../../../shared/loader-spinner/spinner-primeng.service';
+import { AuthService } from '../../login/auth.service';
 
 
 @Component({
@@ -13,7 +17,8 @@ import { MenuOptionsEnum, UserMenuOptionsEnum } from '../panel.model';
   imports: [
     ImageBleedDirective,
     MenubarModule,
-    CardModule
+    CardModule,
+    ButtonModule
   ],
   templateUrl: './panel-show.component.html',
   styleUrl: './panel-show.component.scss'
@@ -26,7 +31,10 @@ export class PanelShowComponent implements OnInit {
   menuItems: MenuItem[] = [];
 
   constructor(
-    private readonly componentLoader: ComponentLoaderService
+    private readonly componentLoader: ComponentLoaderService,
+    private readonly spinnerPrimeNgService: SpinnerPrimeNgService,
+    private readonly router: Router,
+    private readonly authService: AuthService,
   ) { }
 
   ngOnInit() {
@@ -74,4 +82,13 @@ export class PanelShowComponent implements OnInit {
     this.loadPanel(UserMenuOptionsEnum.OpcionesUsuario);
   }
 
+  logout(){
+    this.spinnerPrimeNgService
+      .use(this.authService.logout())
+      .subscribe({
+        next: () => {
+          this.router.navigate(['/login']);          
+        }
+      });
+  }
 }

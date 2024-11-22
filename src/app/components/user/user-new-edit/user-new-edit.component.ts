@@ -24,7 +24,6 @@ import { PeopleService } from '../../people/people.service';
 import { UserPositionService } from '../../user-position/user-position.service';
 import { UserPositionModel } from '../../user-position/user-position.model';
 import { RoleModel } from '../../role/role.model';
-import { PositionRoleService } from '../../position-role/position-role.service';
 import { RoleService } from '../../role/role.service';
 import { UserRoleModel } from '../../user-role/user-role.model';
 import { UserRoleService } from '../../user-role/user-role.service';
@@ -146,7 +145,6 @@ export class UserNewEditComponent {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (res) => {
-          console.log(res);
           this.user = res;
           this.storageSizeMB = this.user.storageSize / (1024 * 1024);
           this.selectedPerson = this.user.person;
