@@ -16,7 +16,7 @@ export class AuthService {
     private readonly http: HttpClient
   ) { }
 
-  login(credentials: { email: string; password: string }): Observable<AuthResponse> {
+  loginAsync(credentials: { email: string; password: string }): Observable<AuthResponse> {
     this.clearAllStorageData();
     return this.http.post<AuthResponse>(`${this.apiUrl}/login`, credentials);
   }
@@ -50,7 +50,7 @@ export class AuthService {
     return userStr ? JSON.parse(userStr) : null;
   }
 
-  logout(): Observable<HttpResponse<void>> {
+  logoutAsync(): Observable<HttpResponse<void>> {
     const userEmail = this.getUserEmail();
     return this.http.post<void>(
       `${this.apiUrl}/logout`,
@@ -83,18 +83,18 @@ export class AuthService {
     return decoded?.sub ?? null;
   }
 
-  getUserGuid(): string | null {
+  getUserGuidAsync(): Observable<string | null> {
     const decoded = this.getDecodedToken();
-    return decoded?.userGuid ?? null;
+    return of(decoded?.userGuid ?? null);
   }
 
-  isTokenValid(): Observable<boolean> {
+  isTokenValidAsync(): Observable<boolean> {
     const token = localStorage.getItem(this.TOKEN_KEY);
     if (!token) return of(false);
     return this.http.post<boolean>(`${this.apiUrl}/validate-token`, { token });
   }
 
-  refreshToken(): Observable<AuthResponse> {
+  refreshTokenAsync(): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(
       `${this.apiUrl}/refresh-token`,
       {},

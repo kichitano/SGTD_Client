@@ -1,0 +1,30 @@
+.button-block {
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+    gap: 1rem;
+}
+
+.label-button-block {
+    font-family: 'Roboto', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #c4c4c4;
+    margin-right: auto;
+}
+
+.table-block {
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+    margin-top: 1.5rem;
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+}
+
+.table-button-block {
+    display: flex;
+    flex-direction: row-reverse;
+}

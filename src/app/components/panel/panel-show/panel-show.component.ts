@@ -72,6 +72,8 @@ export class PanelShowComponent implements OnInit {
         return 'pi pi-fw pi-table';
       case MenuOptionsEnum.Roles:
         return 'pi pi-fw pi-objects-column';
+        case MenuOptionsEnum.TipoDocumento:
+        return 'pi pi-fw pi-table';
       default:
         return '';
     }
@@ -82,12 +84,12 @@ export class PanelShowComponent implements OnInit {
     this.loadPanel(UserMenuOptionsEnum.OpcionesUsuario);
   }
 
-  logout(){
+  logout() {
     this.spinnerPrimeNgService
-      .use(this.authService.logout())
+      .use(this.authService.logoutAsync())
       .subscribe({
         next: () => {
-          this.router.navigate(['/login']);          
+          this.router.navigate(['/login']);
         }
       });
   }

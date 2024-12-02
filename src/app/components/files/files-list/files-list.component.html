@@ -1,7 +1,9 @@
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
 <p-dialog #dialog [(visible)]="visible" [modal]="true" [header]="'Archivos'" (onShow)="dialog.maximize()"
     [style]="{ width: '100vw', height: '100vh' }" styleClass="p-fluid file-upload-dialog">
 
-    <div class="upload-container">
+    <div class="content-container">
         <p-toast></p-toast>
         <p-fileUpload #fileUpload name="files[]" [url]="uploadUrl" [multiple]="true" [maxFileSize]="maxFileSize"
             [showUploadButton]="true" [showCancelButton]="true" (onSelect)="onFileSelect($event)"
@@ -33,10 +35,89 @@
 
                     <div *ngIf="!files?.length" class="empty-state">
                         <i class="pi pi-cloud-upload"></i>
-                        <p>Drag and drop files here or click to select</p>
+                        <p>Arrastre los archivos aqui o haga click en seleccionar</p>
                     </div>
                 </div>
             </ng-template>
         </p-fileUpload>
+    </div>
+
+    <div class="content-container">
+        <div class="button-block">
+            <label for="" class="label-button-block">Mis archivos</label>
+            <div class="buttons-container">
+                <p-button *ngIf="selectedFiles.length > 0" icon="pi pi-download" styleClass="p-button-secondary"
+                    (onClick)="downloadSelectedFiles()" pTooltip="Descargar seleccionados">
+                </p-button>
+                <p-button *ngIf="selectedFiles.length > 0" icon="pi pi-trash" styleClass="p-button-danger"
+                    (onClick)="deleteSelectedFiles()" pTooltip="Eliminar seleccionados">
+                </p-button>
+            </div>
+        </div>
+
+        <p-table #dt1 [value]="uploadedFiles" [(selection)]="selectedFiles" [scrollable]="true" scrollHeight="350px"
+            styleClass="p-datatable-sm">
+            <ng-template pTemplate="caption">
+                <div class="flex justify-content-between">
+                    <p-iconField iconPosition="left">
+                        <p-inputIcon>
+                            <i class="pi pi-search"></i>
+                        </p-inputIcon>
+                        <input pInputText type="text" [(ngModel)]="searchValue"
+                            (input)="applyFilterGlobal($event, 'contains')" (keydown.escape)="clearSearchText(dt1)"
+                            placeholder="Keyboard Search" />
+                    </p-iconField>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 1rem">
+                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                    </th>
+                    <th style="width: 2rem">N°</th>
+                    <th style="width: auto">Nombre</th>
+                    <th style="width: 10rem">Tamaño</th>
+                    <th style="width: 10rem">Fecha de Creación</th>
+                    <th style="width: 14rem; text-align: center">Acciones</th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-file let-i="rowIndex">
+                <tr>
+                    <td>
+                        <p-tableCheckbox [value]="file"></p-tableCheckbox>
+                    </td>
+                    <td>{{i + 1}}</td>
+                    <td>
+                        <i [class]="getFileIcon(file)" class="mr-2"></i>
+                        {{file.fileName}}
+                    </td>
+                    <td>{{formatSize(file.fileSize)}}</td>
+                    <td>{{file.createdAt | date:'dd/MM/yyyy'}}</td>
+                    <td>
+                        <div class="flex gap-2" style="text-align: center">
+                            <button pButton icon="pi pi-download" class="p-button-rounded p-button-text p-button-sm"
+                                pTooltip="Descargar" (click)="downloadFile(file)">
+                            </button>
+                            <button pButton icon="pi pi-share-alt" class="p-button-rounded p-button-text p-button-sm"
+                                pTooltip="Compartir" (click)="shareFile(file.id)">
+                            </button>
+                            <button pButton icon="pi pi-trash"
+                                class="p-button-rounded p-button-text p-button-danger p-button-sm" pTooltip="Eliminar"
+                                (click)="deleteFile(file)">
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="6" class="text-center p-4">
+                        No hay archivos disponibles
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
     </div>
 </p-dialog>

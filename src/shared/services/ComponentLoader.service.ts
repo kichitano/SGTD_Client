@@ -9,6 +9,7 @@ import { RoleListComponent } from '../../app/components/role/role-list/role-list
 import { UserListComponent } from '../../app/components/user/user-list/user-list.component';
 import { UserOptionsShowComponent } from '../../app/components/user-options/user-options-show/user-options-show.component';
 import { FilesListComponent } from '../../app/components/files/files-list/files-list.component';
+import { DocumentTypeListComponent } from '../../app/components/document-type/document-type-list/document-type-list.component';
 
 @Injectable({
     providedIn: 'root'
@@ -37,6 +38,11 @@ export class ComponentLoaderService {
             case MenuOptionsEnum.Usuarios:
                 this.componentToLoad.next(UserListComponent);
                 break;
+            case MenuOptionsEnum.TipoDocumento:
+                this.componentToLoad.next(DocumentTypeListComponent);
+                break;
+
+            // Opciones de usuario
             case UserMenuOptionsEnum.OpcionesUsuario:
                 this.componentToLoad.next(UserOptionsShowComponent);
                 break;

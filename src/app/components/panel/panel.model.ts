@@ -4,7 +4,8 @@ export enum MenuOptionsEnum {
     Cargos = 'cargos',
     Usuarios = 'usuarios',
     Modulos = 'modulos',
-    Roles = 'roles'
+    Roles = 'roles',
+    TipoDocumento = 'tipoDocumento',
 }
 
 export enum UserMenuOptionsEnum {

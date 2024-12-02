@@ -1,0 +1,28 @@
+<p-dialog #dialog [(visible)]="visible" [modal]="true" [header]="'Ver Tipo de Documento'" [maximizable]="true"
+    [style]="{width: '40vw'}" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="content-block">
+            <div class="row-block">
+                <div class="row-item-block-60">
+                    <p-floatLabel>
+                        <input id="name" type="text" pInputText [(ngModel)]="documentType.name" readonly
+                            class="readonly-input">
+                        <label for="name">Nombre</label>
+                    </p-floatLabel>
+                </div>
+                <div class="row-item-block-40">
+                    <p-floatLabel>
+                        <input id="mode" type="text" pInputText
+                            [ngModel]="documentType.isUploadable ? 'Upload' : 'Download'" readonly
+                            class="readonly-input">
+                        <label for="mode">Modalidad</label>
+                    </p-floatLabel>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" severity="secondary"
+            (click)="hideDialog()"></button>
+    </ng-template>
+</p-dialog>

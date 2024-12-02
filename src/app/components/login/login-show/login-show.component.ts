@@ -58,7 +58,7 @@ export class LoginShowComponent {
     };
 
     this.spinnerPrimeNgService
-      .use(this.authService.login(loginData))
+      .use(this.authService.loginAsync(loginData))
       .subscribe({
         next: (response) => {
           if (response.success) {

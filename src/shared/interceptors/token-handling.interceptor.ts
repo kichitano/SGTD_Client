@@ -60,7 +60,7 @@ export class TokenHandlingInterceptor implements HttpInterceptor {
             detail: message,
             life: 3000
         });
-        this.authService.logout().subscribe(() => {
+        this.authService.logoutAsync().subscribe(() => {
             this.router.navigate(['/login']);
         });
     }
